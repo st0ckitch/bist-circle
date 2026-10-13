@@ -1,7 +1,7 @@
-# Ambassador — BGA • BIST Parent Loyalty Programme
+# Ambassador — BIST Parent Loyalty Programme
 
 One-page website for the Ambassador loyalty programme: exclusive offers from
-partner businesses across Tbilisi for BGA and BIST parents.
+partner businesses across Tbilisi for BIST parents.
 
 ## Structure
 
