@@ -233,7 +233,7 @@
       <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 20px; padding: 26px; display: flex; flex-direction: column;">
         <div style="font-family: Sora, sans-serif; font-weight: 800; font-size: 40px; color: #F2B32C; margin-bottom: 14px;">01</div>
         <div style="font-size: 17px; font-weight: 800; margin-bottom: 8px;">Register as a member</div>
-        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Fill in the short registration form. Circle is open to BIST families, and the Circle team confirms your membership by email.</p>
+        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Fill in the short registration form. Circle is open to BIST families. The Circle team reviews each registration and contacts you shortly.</p>
         <button onClick="{{ openMember }}" style="margin-top: 16px; align-self: flex-start; background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; padding: 11px 18px; border-radius: 999px; cursor: pointer; transition: all .25s;" style-hover="background: #F2B32C; color: #0D1B3E;">Register now</button>
       </div>
       <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 20px; padding: 26px; display: flex; flex-direction: column;">
@@ -381,8 +381,8 @@
         <sc-if value="{{ memberSent }}" hint-placeholder-val="{{ false }}">
           <div style="text-align: center; padding: 30px 8px 10px;">
             <div style="width: 62px; height: 62px; border-radius: 50%; background: #F2B32C; color: #0D1B3E; font-size: 26px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">✓</div>
-            <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 10px;">Welcome to Circle!</h3>
-            <p style="margin: 0 auto 24px; font-size: 14.5px; line-height: 1.6; color: #5A6478; max-width: 40ch;">Thank you for registering. The Circle team at BIST will confirm your membership by email.</p>
+            <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 10px;">Thank you for your submission</h3>
+            <p style="margin: 0 auto 24px; font-size: 14.5px; line-height: 1.6; color: #5A6478; max-width: 40ch;">We have received your details. The Circle team will review them and contact you shortly.</p>
             <button type="button" onClick="{{ closeMember }}" style="background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 800; padding: 12px 24px; border-radius: 999px; cursor: pointer;">Back to the offers</button>
           </div>
         </sc-if>
@@ -391,7 +391,7 @@
             <img src="brand/circle-logo.png" alt="Circle" style="height: 46px; width: auto; display: block; margin-bottom: 14px;">
             <div style="font-size: 11px; font-weight: 800; letter-spacing: .24em; color: #C8102E; margin-bottom: 8px;">MEMBERSHIP</div>
             <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em;">Become a Circle member</h3>
-            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Circle is open to the BIST community. Register below and the Circle team will confirm your membership by email.</p>
+            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Circle is open to the BIST community. Send us your details below and the Circle team will contact you shortly.</p>
           </div>
           <form onSubmit="{{ submitMember }}" style="display: flex; flex-direction: column; gap: 14px;">
             <input type="text" name="_honey" autocomplete="off" aria-hidden="true" style="display: none;">
