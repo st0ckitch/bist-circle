@@ -6,6 +6,21 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Circle – BIST Parent Community</title>
+<script>
+  // Google Analytics 4 measurement ID (G-XXXXXXXXXX); tracking stays off while this is empty.
+  window.CIRCLE_GA_ID = "";
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { dataLayer.push(arguments); };
+  if (window.CIRCLE_GA_ID) {
+    var ga = document.createElement("script");
+    ga.async = true;
+    ga.src = "https://www.googletagmanager.com/gtag/js?id=" + window.CIRCLE_GA_ID;
+    document.head.appendChild(ga);
+    gtag("js", new Date());
+    gtag("config", window.CIRCLE_GA_ID);
+  }
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -32,8 +47,18 @@
   .rise { animation: risein .8s cubic-bezier(.22,.61,.36,1) both; }
   .rise2 { animation: risein .8s .12s cubic-bezier(.22,.61,.36,1) both; }
   .rise3 { animation: risein .8s .24s cubic-bezier(.22,.61,.36,1) both; }
-  .cardlink { display: inline-flex; align-items: center; gap: 7px; max-width: 100%; min-width: 0; box-sizing: border-box; padding: 7px 12px 7px 10px; border-radius: 999px; background: #F3F1EA; color: #0D1B3E; text-decoration: none; font-size: 12.5px; font-weight: 700; transition: all .2s; }
-  .cardlink:hover { background: #F2B32C; color: #0D1B3E; }
+  .cardlink { display: inline-flex; align-items: center; gap: 7px; max-width: 100%; min-width: 0; box-sizing: border-box; padding: 7px 13px 7px 11px; border-radius: 999px; border: 1.5px solid #0D1B3E; background: #FFFFFF; color: #0D1B3E; text-decoration: none; font-size: 12.5px; font-weight: 800; transition: all .2s; }
+  .cardlink:hover { background: #0D1B3E; color: #FFFFFF; }
+  .seal { position: absolute; left: -18px; top: -18px; z-index: 2; width: 92px; height: 92px; border-radius: 50%; background: #0D1B3E; border: 4px solid #FFFFFF; box-sizing: border-box; box-shadow: 0 14px 30px rgba(13,27,62,.35); display: flex; align-items: center; justify-content: center; }
+  .seal img { width: 64px; height: auto; display: block; }
+  .search { width: 100%; box-sizing: border-box; border: 1px solid #D8D4C6; border-radius: 999px; padding: 13px 18px 13px 44px; background: #FFFFFF; font-family: Manrope, sans-serif; font-size: 14.5px; font-weight: 600; color: #0D1B3E; transition: border-color .2s; }
+  .search:focus { outline: none; border-color: #0D1B3E; }
+  .flbl { display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #16295B; }
+  .fld { width: 100%; box-sizing: border-box; border: 1px solid #D8D4C6; border-radius: 12px; padding: 12px 14px; background: #FAF9F5; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 600; color: #0D1B3E; }
+  .fld:focus { outline: none; border-color: #0D1B3E; background: #FFFFFF; }
+  .fbtn { margin-top: 4px; width: 100%; border: none; border-radius: 999px; padding: 14px 24px; background: #F2B32C; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 15px; font-weight: 800; cursor: pointer; transition: all .25s; }
+  .fbtn:hover { background: #0D1B3E; color: #FFFFFF; }
+  .fbtn:disabled { opacity: .6; cursor: default; }
   .cardlink svg { width: 14px; height: 14px; display: block; flex: 0 0 auto; }
   .cardlink span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .chiplink { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; border: 1px solid #E7E4DB; background: #FAF9F5; color: #0D1B3E; text-decoration: none; font-size: 12.5px; font-weight: 800; transition: all .2s; }
@@ -46,6 +71,8 @@
     .duo { gap: 12px !important; }
     .duo img { border-width: 4px !important; }
     .duo img:last-child { margin-top: 22px !important; }
+    .seal { width: 68px !important; height: 68px !important; left: -10px !important; top: -10px !important; border-width: 3px !important; }
+    .seal img { width: 46px !important; }
   }
   @keyframes tickermove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) {
@@ -77,11 +104,11 @@
     }
     #how { padding: 56px 18px 24px !important; }
     #offers { padding: 44px 18px 60px !important; }
-    [data-screen-label="Become a partner CTA"] { padding: 0 18px 64px !important; }
-    [data-screen-label="Become a partner CTA"] > div { padding: 32px 22px !important; }
-    [data-screen-label="Become a partner CTA"] > div > a { width: 100%; box-sizing: border-box; text-align: center; }
-    [data-screen-label="Offer details popup"] { align-items: flex-start !important; padding: 12px !important; }
-    [data-screen-label="Offer details popup"] > div { padding: 26px 18px !important; }
+    [data-screen-label="Partner CTA"] { padding: 0 18px 64px !important; }
+    [data-screen-label="Partner CTA"] > div { padding: 32px 22px !important; }
+    [data-screen-label="Partner CTA"] > div > button { width: 100%; }
+    [data-screen-label$="popup"] { align-items: flex-start !important; padding: 12px !important; }
+    [data-screen-label$="popup"] > div { padding: 26px 18px !important; }
     footer > div { padding: 48px 18px 24px !important; }
     footer > div > div:first-child { gap: 28px !important; padding-bottom: 30px !important; }
   }
@@ -99,8 +126,8 @@
       <div style="display: flex; align-items: center; gap: 22px;">
         <a href="#offers" style="color: #0D1B3E; text-decoration: none; font-size: 14px; font-weight: 600;">Offers</a>
         <a href="#how" style="color: #0D1B3E; text-decoration: none; font-size: 14px; font-weight: 600;">How it works</a>
-        <a href="{{ feedbackMail }}" style="color: #0D1B3E; text-decoration: none; font-size: 14px; font-weight: 600;">Feedback</a>
-        <a href="{{ partnerMail }}" style="border: 1px solid rgba(13,27,62,.3); color: #0D1B3E; text-decoration: none; font-size: 13.5px; font-weight: 700; padding: 10px 18px; border-radius: 999px; transition: all .25s;" style-hover="border-color: #0D1B3E; background: #0D1B3E; color: #FFFFFF;">Become a partner</a>
+        <a href="{{ feedbackMail }}" onClick="{{ feedbackClick }}" style="color: #0D1B3E; text-decoration: none; font-size: 14px; font-weight: 600;">Feedback</a>
+        <button onClick="{{ openMember }}" style="background: transparent; border: 1px solid rgba(13,27,62,.3); color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 700; padding: 10px 18px; border-radius: 999px; cursor: pointer; transition: all .25s;" style-hover="border-color: #0D1B3E; background: #0D1B3E; color: #FFFFFF;">Become a member</button>
         <a href="#offers" style="background: #F2B32C; color: #0D1B3E; text-decoration: none; font-size: 13.5px; font-weight: 800; padding: 10px 18px; border-radius: 999px; transition: all .25s;" style-hover="background: #0D1B3E; color: #FFFFFF;">Browse offers</a>
       </div>
       <button onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="display: none; width: 44px; height: 44px; align-items: center; justify-content: center; border: 1px solid rgba(13,27,62,.25); border-radius: 12px; background: transparent; color: #0D1B3E; font-size: 19px; line-height: 1; cursor: pointer; padding: 0;">{{ menuIcon }}</button>
@@ -109,8 +136,8 @@
       <div data-screen-label="Mobile menu" style="position: absolute; top: 100%; left: 0; right: 0; background: #F6F4EE; border-bottom: 1px solid rgba(13,27,62,.08); box-shadow: 0 22px 34px rgba(13,27,62,.14); padding: 8px 16px 16px; display: flex; flex-direction: column; gap: 6px;">
         <a href="#offers" onClick="{{ closeMenu }}" style="color: #0D1B3E; text-decoration: none; font-size: 16px; font-weight: 700; padding: 13px 6px;">Offers</a>
         <a href="#how" onClick="{{ closeMenu }}" style="color: #0D1B3E; text-decoration: none; font-size: 16px; font-weight: 700; padding: 13px 6px;">How it works</a>
-        <a href="{{ feedbackMail }}" onClick="{{ closeMenu }}" style="color: #0D1B3E; text-decoration: none; font-size: 16px; font-weight: 700; padding: 13px 6px;">Feedback</a>
-        <a href="{{ partnerMail }}" onClick="{{ closeMenu }}" style="margin-top: 4px; border: 1px solid rgba(13,27,62,.3); color: #0D1B3E; text-decoration: none; text-align: center; font-size: 15px; font-weight: 700; padding: 13px 18px; border-radius: 999px;">Become a partner</a>
+        <a href="{{ feedbackMail }}" onClick="{{ feedbackClick }}" style="color: #0D1B3E; text-decoration: none; font-size: 16px; font-weight: 700; padding: 13px 6px;">Feedback</a>
+        <button onClick="{{ openMember }}" style="margin-top: 4px; border: 1px solid rgba(13,27,62,.3); background: transparent; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 15px; font-weight: 700; padding: 13px 18px; border-radius: 999px; cursor: pointer;">Become a member</button>
         <a href="#offers" onClick="{{ closeMenu }}" style="background: #F2B32C; color: #0D1B3E; text-decoration: none; text-align: center; font-size: 15px; font-weight: 800; padding: 13px 18px; border-radius: 999px;">Browse offers</a>
       </div>
     </sc-if>
@@ -135,6 +162,7 @@
           <div style="position: relative; display: flex; align-items: center; justify-content: center;">
             <div style="position: relative; width: 100%; max-width: 560px;">
               <div style="position: absolute; inset: -14px 14px 14px -14px; border: 2px solid rgba(242,179,44,.45); border-radius: 26px; pointer-events: none;"></div>
+              <div class="seal"><img src="brand/circle-logo-reverse.png" alt="Circle"></div>
               <img src="photos/bist-campus.webp" alt="The BIST campus in Tbilisi" style="position: relative; width: 100%; height: clamp(230px, 28vw, 380px); object-fit: cover; border-radius: 22px; box-shadow: 0 28px 60px rgba(0,0,0,.4); display: block;">
             </div>
           </div>
@@ -148,7 +176,8 @@
             <a href="#offers" style="display: inline-block; background: #0D1B3E; color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 800; padding: 13px 22px; border-radius: 999px; transition: all .25s;" style-hover="background: #16295B; color: #F2B32C;">Meet the partners</a>
           </div>
           <div style="display: flex; align-items: center; justify-content: center;">
-            <div class="duo" style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; width: 100%; max-width: 560px;">
+            <div class="duo" style="position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; width: 100%; max-width: 560px;">
+              <div class="seal"><img src="brand/circle-logo-reverse.png" alt="Circle"></div>
               <img src="photos/family-arrival.webp" alt="A BIST family arriving at school" loading="lazy" style="width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border: 6px solid #FFFFFF; border-radius: 18px; box-sizing: border-box; box-shadow: 0 22px 45px rgba(13,27,62,.3); transform: rotate(-2deg); display: block;">
               <img src="photos/parent-event.webp" alt="A parent and child at a school event" loading="lazy" style="width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border: 6px solid #FFFFFF; border-radius: 18px; box-sizing: border-box; box-shadow: 0 22px 45px rgba(13,27,62,.3); transform: rotate(2deg); margin-top: 34px; display: block;">
             </div>
@@ -162,12 +191,11 @@
             <p style="font-size: 16.5px; line-height: 1.6; color: rgba(13,27,62,.72); margin: 0 0 28px; max-width: 46ch; text-wrap: pretty;">Talks, workshops and partner sessions for parents as well as pupils, from health and wellbeing to skills for the future, because a school community keeps learning together.</p>
             <a href="#how" style="display: inline-block; background: #C8102E; color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 800; padding: 13px 22px; border-radius: 999px; transition: all .25s;" style-hover="background: #0D1B3E;">How the programme works</a>
           </div>
-          <div class="hero-art" style="min-height: 320px; position: relative; display: flex; align-items: center; justify-content: center;">
-            <div style="position: relative; width: 320px; height: 320px; display: flex; align-items: center; justify-content: center;">
-              <div class="ring" style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px dashed rgba(13,27,62,.25);"><span style="position: absolute; top: -6px; left: 50%; width: 12px; height: 12px; border-radius: 50%; background: #C8102E;"></span></div>
-              <div style="position: absolute; inset: 44px; border-radius: 50%; border: 2px solid #F2B32C;"></div>
-              <div style="position: absolute; inset: 92px; border-radius: 50%; background: #F6F4EE;"></div>
-              <div class="pillar" style="position: relative; color: #0D1B3E;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="80" height="80" aria-hidden="true"><path d="M12 21v-7"></path><path d="M12 14c-4.5 0-7-3-7-7.5C9.5 6.5 12 9 12 14z"></path><path d="M12 11c0-4.5 2.8-7 7.5-7 0 4.8-2.6 7.5-7.5 7.5z"></path></svg></div>
+          <div style="position: relative; display: flex; align-items: center; justify-content: center;">
+            <div style="position: relative; width: 100%; max-width: 560px;">
+              <div style="position: absolute; inset: -14px 14px 14px -14px; border: 2px solid rgba(200,16,46,.3); border-radius: 26px; pointer-events: none;"></div>
+              <div class="seal"><img src="brand/circle-logo-reverse.png" alt="Circle"></div>
+              <img src="photos/classroom.webp" alt="A BIST teacher working with two students" loading="lazy" style="position: relative; width: 100%; height: clamp(230px, 28vw, 380px); object-fit: cover; border-radius: 22px; box-shadow: 0 28px 60px rgba(13,27,62,.22); display: block;">
             </div>
           </div>
         </div>
@@ -191,9 +219,9 @@
 
   <div style="max-width: 1400px; margin: 14px auto 0; padding: 0 16px;">
     <div style="overflow: hidden; border-radius: 999px; background: #0D1B3E;">
-      <div style="display: flex; width: max-content; animation: tickermove 30s linear infinite;">
-        <span style="white-space: nowrap; padding: 11px 0 11px 32px; font-size: 11.5px; font-weight: 800; letter-spacing: .24em; color: #F2B32C;">WELLNESS &amp; SPORT ✦ TRAVEL ✦ MEDICINE ✦ ENTERTAINMENT ✦ FOOD ✦ AUTOMOTIVE ✦ OTHER ✦&nbsp;</span>
-        <span style="white-space: nowrap; padding: 11px 0 11px 32px; font-size: 11.5px; font-weight: 800; letter-spacing: .24em; color: #F2B32C;">WELLNESS &amp; SPORT ✦ TRAVEL ✦ MEDICINE ✦ ENTERTAINMENT ✦ FOOD ✦ AUTOMOTIVE ✦ OTHER ✦&nbsp;</span>
+      <div style="display: flex; width: max-content; animation: tickermove 38s linear infinite;">
+        <span style="white-space: nowrap; padding: 11px 0 11px 32px; font-size: 11.5px; font-weight: 800; letter-spacing: .24em; color: #F2B32C;">WELLNESS &amp; SPORT ✦ TRAVEL &amp; LEISURE ✦ HEALTHCARE ✦ ENTERTAINMENT ✦ GASTRONOMY ✦ AUTOMOTIVE ✦ EXPAT SERVICES ✦ OTHER ✦&nbsp;</span>
+        <span style="white-space: nowrap; padding: 11px 0 11px 32px; font-size: 11.5px; font-weight: 800; letter-spacing: .24em; color: #F2B32C;">WELLNESS &amp; SPORT ✦ TRAVEL &amp; LEISURE ✦ HEALTHCARE ✦ ENTERTAINMENT ✦ GASTRONOMY ✦ AUTOMOTIVE ✦ EXPAT SERVICES ✦ OTHER ✦&nbsp;</span>
       </div>
     </div>
   </div>
@@ -201,28 +229,32 @@
   <section id="how" data-screen-label="How it works" style="max-width: 1200px; margin: 0 auto; padding: 76px 24px 36px;">
     <div style="font-size: 12px; font-weight: 800; letter-spacing: .24em; color: #C8102E; margin-bottom: 14px;">USING YOUR BENEFITS</div>
     <h2 style="font-family: Sora, sans-serif; font-weight: 800; font-size: clamp(28px, 3.4vw, 40px); margin: 0 0 28px; letter-spacing: -0.01em;">How it works</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px;">
-      <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 20px; padding: 26px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px;">
+      <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 20px; padding: 26px; display: flex; flex-direction: column;">
         <div style="font-family: Sora, sans-serif; font-weight: 800; font-size: 40px; color: #F2B32C; margin-bottom: 14px;">01</div>
-        <div style="font-size: 17px; font-weight: 800; margin-bottom: 8px;">Choose an offer</div>
-        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Browse the offers below. Each one shows what you get and how long the offer runs.</p>
+        <div style="font-size: 17px; font-weight: 800; margin-bottom: 8px;">Register as a member</div>
+        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Fill in the short registration form. Circle is open to BIST families, and the Circle team confirms your membership by email.</p>
+        <button onClick="{{ openMember }}" style="margin-top: 16px; align-self: flex-start; background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; padding: 11px 18px; border-radius: 999px; cursor: pointer; transition: all .25s;" style-hover="background: #F2B32C; color: #0D1B3E;">Register now</button>
       </div>
-      <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 20px; padding: 26px;">
+      <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 20px; padding: 26px; display: flex; flex-direction: column;">
         <div style="font-family: Sora, sans-serif; font-weight: 800; font-size: 40px; color: #F2B32C; margin-bottom: 14px;">02</div>
-        <div style="font-size: 17px; font-weight: 800; margin-bottom: 8px;">Visit the partner</div>
-        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">No registration through the school is needed. Go directly to the partner, or book with them where the offer says so.</p>
+        <div style="font-size: 17px; font-weight: 800; margin-bottom: 8px;">Choose an offer</div>
+        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Browse or search the offers below. Each one shows what you get and how long the offer runs.</p>
       </div>
-      <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 20px; padding: 26px;">
+      <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 20px; padding: 26px; display: flex; flex-direction: column;">
         <div style="font-family: Sora, sans-serif; font-weight: 800; font-size: 40px; color: #F2B32C; margin-bottom: 14px;">03</div>
+        <div style="font-size: 17px; font-weight: 800; margin-bottom: 8px;">Visit the partner</div>
+        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Go directly to the partner, or book with them where the offer says so.</p>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 20px; padding: 26px; display: flex; flex-direction: column;">
+        <div style="font-family: Sora, sans-serif; font-weight: 800; font-size: 40px; color: #F2B32C; margin-bottom: 14px;">04</div>
         <div style="font-size: 17px; font-weight: 800; margin-bottom: 8px;">Activate your benefit</div>
         <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Every offer says how to identify yourself: usually your BIST parent card, sometimes a promo code or a mention of Circle when booking. See "How to claim" in the offer details.</p>
       </div>
     </div>
-    <div style="margin-top: 18px; background: #0D1B3E; color: #FFFFFF; border-radius: 20px; padding: 24px 28px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-      <div style="width: 58px; height: 38px; flex: 0 0 auto; border-radius: 7px; background: linear-gradient(135deg, #F8D06B, #F2B32C 60%, #D99A14); display: flex; align-items: center; justify-content: center;">
-        <span style="font-family: Sora, sans-serif; font-size: 7px; font-weight: 800; letter-spacing: .18em; color: #0D1B3E;">CIRCLE</span>
-      </div>
-      <p style="margin: 0; font-size: 15px; line-height: 1.6; flex: 1 1 320px;"><strong>Your parent card is your pass.</strong> For most offers you simply present your valid BIST parent card before you pay. Where a partner works differently, the "How to claim" section of the offer tells you exactly what to show or say.</p>
+    <div style="margin-top: 18px; background: #0D1B3E; color: #FFFFFF; border-radius: 20px; padding: 24px 28px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+      <img src="brand/circle-logo-reverse.png" alt="Circle" style="height: 46px; width: auto; flex: 0 0 auto; display: block;">
+      <p style="margin: 0; font-size: 15px; line-height: 1.6; flex: 1 1 320px;"><strong style="color: #F2B32C;">Exclusively for the BIST community.</strong> Circle is the parent community of the British International School of Tbilisi, so every offer is reserved for registered BIST families. To use one, follow the "How to claim" steps in the offer: your BIST parent card, a promo code or a mention of Circle when you book.</p>
     </div>
   </section>
 
@@ -235,8 +267,13 @@
       <div style="font-size: 14px; font-weight: 600; color: #5A6478;">{{ offerCountLabel }}</div>
     </div>
 
+    <div style="position: relative; max-width: 480px; margin-bottom: 16px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; left: 17px; top: 50%; width: 17px; height: 17px; margin-top: -8.5px; color: #5A6478; pointer-events: none;"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input type="search" class="search" value="{{ q }}" onChange="{{ onSearch }}" placeholder="Search offers, partners or categories" aria-label="Search offers">
+    </div>
+
     <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 26px;">
-      <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="8">
+      <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="9">
         <button onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}<span style="opacity: .55; font-weight: 700;">{{ chip.count }}</span></button>
       </sc-for>
     </div>
@@ -245,7 +282,7 @@
       <sc-for list="{{ cards }}" as="card" hint-placeholder-count="1">
         <div role="button" tabindex="0" onClick="{{ card.open }}" style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 18px; padding: 24px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: all .3s;" style-hover="transform: translateY(-4px); box-shadow: 0 18px 40px rgba(13,27,62,.12); border-color: #0D1B3E;">
           <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
-            <span style="font-size: 10.5px; font-weight: 800; letter-spacing: .16em; color: #16295B; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ card.cat }}</span>
+            <span style="font-size: 10.5px; font-weight: 800; letter-spacing: .16em; line-height: 1.5; color: #16295B; text-transform: uppercase;">{{ card.catLabel }}</span>
             <span style="background: #F2B32C; color: #0D1B3E; font-family: Sora, sans-serif; font-weight: 800; font-size: 13.5px; padding: 6px 12px; border-radius: 999px; white-space: nowrap; flex: 0 0 auto;">{{ card.badge }}</span>
           </div>
           <div style="height: 64px; flex: 0 0 auto; width: 100%; display: flex; align-items: center; justify-content: flex-start; overflow: hidden;">
@@ -259,22 +296,29 @@
           </div>
           <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: #5A6478;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 13px; height: 13px; flex: 0 0 auto;"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg><span>{{ card.validity }}</span></div>
           <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #E3E0D6; display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; font-weight: 800; color: #2743A6;">
-            <div style="display: flex; align-items: center; min-width: 0;"><sc-for list="{{ card.cardLinks }}" as="link" hint-placeholder-count="1"><a href="{{ link.url }}" target="_blank" rel="noopener" class="cardlink" title="{{ link.title }}" onClick="{{ stopClick }}"><sc-if value="{{ link.isWeb }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"></path></svg></sc-if><sc-if value="{{ link.isFb }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></sc-if><sc-if value="{{ link.isIg }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"></path></svg></sc-if><span>{{ link.text }}</span></a></sc-for></div>
+            <div style="display: flex; align-items: center; min-width: 0;"><sc-for list="{{ card.cardLinks }}" as="link" hint-placeholder-count="1"><a href="{{ link.url }}" target="_blank" rel="noopener" class="cardlink" title="{{ link.title }}" onClick="{{ link.onClick }}"><sc-if value="{{ link.isWeb }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"></path></svg></sc-if><sc-if value="{{ link.isFb }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></sc-if><sc-if value="{{ link.isIg }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"></path></svg></sc-if><span>{{ link.cta }}</span></a></sc-for></div>
             <span style="display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto;">View details <span aria-hidden="true">→</span></span>
           </div>
         </div>
       </sc-for>
     </div>
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+      <div style="background: #FFFFFF; border: 1px dashed #D8D4C6; border-radius: 18px; padding: 34px 24px; text-align: center;">
+        <div style="font-size: 17px; font-weight: 800; margin-bottom: 6px;">No offers match your search</div>
+        <p style="margin: 0 0 16px; font-size: 14px; color: #5A6478;">Try another word, or show every offer again.</p>
+        <button onClick="{{ clearFilters }}" style="background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; padding: 11px 20px; border-radius: 999px; cursor: pointer;">Show all offers</button>
+      </div>
+    </sc-if>
   </section>
 
-  <section data-screen-label="Become a partner CTA" style="max-width: 1200px; margin: 0 auto; padding: 0 24px 84px;">
+  <section data-screen-label="Partner CTA" style="max-width: 1200px; margin: 0 auto; padding: 0 24px 84px;">
     <div style="background: #16295B; color: #FFFFFF; border-radius: 28px; padding: 48px 40px; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap;">
       <div style="max-width: 60ch;">
         <div style="font-size: 12px; font-weight: 800; letter-spacing: .24em; color: #F2B32C; margin-bottom: 12px;">FOR BUSINESSES</div>
-        <h2 style="font-family: Sora, sans-serif; font-weight: 800; font-size: clamp(24px, 3vw, 34px); margin: 0 0 10px; letter-spacing: -0.01em;">Run a business in Tbilisi?</h2>
+        <h2 style="font-family: Sora, sans-serif; font-weight: 800; font-size: clamp(24px, 3vw, 34px); margin: 0 0 10px; letter-spacing: -0.01em;">Run a business in Georgia?</h2>
         <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: rgba(255,255,255,.72); text-wrap: pretty;">Join the Circle partner network and introduce your offer to BIST families.</p>
       </div>
-      <a href="{{ partnerMail }}" style="background: #F2B32C; color: #0D1B3E; text-decoration: none; font-size: 15px; font-weight: 800; padding: 15px 26px; border-radius: 999px; transition: all .25s;" style-hover="background: #FFFFFF;">Become a partner</a>
+      <button onClick="{{ openPartner }}" style="background: #F2B32C; border: none; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 15px; font-weight: 800; padding: 15px 26px; border-radius: 999px; cursor: pointer; transition: all .25s;" style-hover="background: #FFFFFF;">Register your business</button>
     </div>
   </section>
 
@@ -283,7 +327,7 @@
       <div onClick="{{ stopClick }}" style="background: #FFFFFF; border-radius: 24px; width: min(560px, 100%); max-height: 90vh; overflow-y: auto; overscroll-behavior: contain; padding: 32px; box-sizing: border-box; position: relative;">
         <button onClick="{{ closeDetail }}" aria-label="Close" style="position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #E7E4DB; background: #FFFFFF; color: #0D1B3E; font-size: 15px; cursor: pointer; transition: all .25s;" style-hover="background: #0D1B3E; color: #FFFFFF;">✕</button>
         <div style="display: flex; justify-content: flex-start; align-items: center; gap: 10px; margin-bottom: 18px; padding-right: 48px;">
-          <span style="font-size: 10.5px; font-weight: 800; letter-spacing: .16em; color: #16295B; text-transform: uppercase;">{{ detail.cat }}</span>
+          <span style="font-size: 10.5px; font-weight: 800; letter-spacing: .16em; line-height: 1.5; color: #16295B; text-transform: uppercase;">{{ detail.catLabel }}</span>
           <span style="background: #F2B32C; color: #0D1B3E; font-family: Sora, sans-serif; font-weight: 800; font-size: 13.5px; padding: 6px 12px; border-radius: 999px; white-space: nowrap;">{{ detail.badge }}</span>
         </div>
         <div style="height: 72px; width: 100%; display: flex; align-items: center; justify-content: flex-start; overflow: hidden; margin-bottom: 16px;">
@@ -292,7 +336,7 @@
         <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 26px; margin: 0 0 10px; letter-spacing: -0.01em;">{{ detail.partner }}</h3>
         <sc-if value="{{ detail.hasLinks }}" hint-placeholder-val="{{ true }}">
           <div style="display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 14px;">
-            <sc-for list="{{ detail.links }}" as="link" hint-placeholder-count="0"><a href="{{ link.url }}" target="_blank" rel="noopener" class="chiplink" onClick="{{ stopClick }}"><sc-if value="{{ link.isWeb }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"></path></svg></sc-if><sc-if value="{{ link.isFb }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></sc-if><sc-if value="{{ link.isIg }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"></path></svg></sc-if><span>{{ link.label }}</span></a></sc-for>
+            <sc-for list="{{ detail.links }}" as="link" hint-placeholder-count="0"><a href="{{ link.url }}" target="_blank" rel="noopener" class="chiplink" onClick="{{ link.onClick }}"><sc-if value="{{ link.isWeb }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"></path></svg></sc-if><sc-if value="{{ link.isFb }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></sc-if><sc-if value="{{ link.isIg }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"></path></svg></sc-if><span>{{ link.label }}</span></a></sc-for>
           </div>
         </sc-if>
         <p style="margin: 0 0 18px; font-size: 14.5px; line-height: 1.65; color: #5A6478;">{{ detail.desc }}</p>
@@ -324,8 +368,90 @@
         </sc-if>
         <div style="margin-top: 18px; padding-top: 14px; border-top: 1px dashed #E3E0D6; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
           <span style="font-size: 12.5px; color: #5A6478;">Used this offer? Tell us how it went.</span>
-          <a href="{{ detailFeedbackMail }}" style="border: 1px solid rgba(13,27,62,.3); color: #0D1B3E; text-decoration: none; font-size: 12.5px; font-weight: 800; padding: 9px 14px; border-radius: 999px; transition: all .25s;" style-hover="background: #0D1B3E; color: #FFFFFF;">Share feedback</a>
+          <a href="{{ detailFeedbackMail }}" onClick="{{ feedbackClick }}" style="border: 1px solid rgba(13,27,62,.3); color: #0D1B3E; text-decoration: none; font-size: 12.5px; font-weight: 800; padding: 9px 14px; border-radius: 999px; transition: all .25s;" style-hover="background: #0D1B3E; color: #FFFFFF;">Share feedback</a>
         </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ memberOpen }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Member form popup" onClick="{{ closeMember }}" style="position: fixed; inset: 0; z-index: 100; background: rgba(13,27,62,.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px;">
+      <div onClick="{{ stopClick }}" style="background: #FFFFFF; border-radius: 24px; width: min(540px, 100%); max-height: 90vh; overflow-y: auto; overscroll-behavior: contain; padding: 32px; box-sizing: border-box; position: relative; box-shadow: 0 30px 80px rgba(13,27,62,.35);">
+        <button type="button" onClick="{{ closeMember }}" aria-label="Close" style="position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #E7E4DB; background: #FFFFFF; color: #0D1B3E; font-size: 15px; cursor: pointer;">✕</button>
+        <sc-if value="{{ memberSent }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align: center; padding: 30px 8px 10px;">
+            <div style="width: 62px; height: 62px; border-radius: 50%; background: #F2B32C; color: #0D1B3E; font-size: 26px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">✓</div>
+            <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 10px;">Welcome to Circle!</h3>
+            <p style="margin: 0 auto 24px; font-size: 14.5px; line-height: 1.6; color: #5A6478; max-width: 40ch;">Thank you for registering. The Circle team at BIST will confirm your membership by email.</p>
+            <button type="button" onClick="{{ closeMember }}" style="background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 800; padding: 12px 24px; border-radius: 999px; cursor: pointer;">Back to the offers</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ memberNotSent }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-bottom: 22px; padding-right: 40px;">
+            <img src="brand/circle-logo.png" alt="Circle" style="height: 46px; width: auto; display: block; margin-bottom: 14px;">
+            <div style="font-size: 11px; font-weight: 800; letter-spacing: .24em; color: #C8102E; margin-bottom: 8px;">MEMBERSHIP</div>
+            <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em;">Become a Circle member</h3>
+            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Circle is open to the BIST community. Register below and the Circle team will confirm your membership by email.</p>
+          </div>
+          <form onSubmit="{{ submitMember }}" style="display: flex; flex-direction: column; gap: 14px;">
+            <input type="text" name="_honey" autocomplete="off" aria-hidden="true" style="display: none;">
+            <label class="flbl">FULL NAME<input class="fld" type="text" name="name" autocomplete="name" required="{{ true }}" placeholder="Parent or guardian"></label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+              <label class="flbl">EMAIL<input class="fld" type="email" name="email" autocomplete="email" required="{{ true }}" placeholder="name@example.com"></label>
+              <label class="flbl">PHONE<input class="fld" type="tel" name="phone" autocomplete="tel" required="{{ true }}" placeholder="+995"></label>
+            </div>
+            <label class="flbl">CHILD'S NAME AND YEAR GROUP<input class="fld" type="text" name="child" required="{{ true }}" placeholder="e.g. Nino K., Year 4"></label>
+            <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 600; line-height: 1.5; color: #5A6478;"><input type="checkbox" name="consent" value="yes" required="{{ true }}" style="margin-top: 3px; accent-color: #0D1B3E;"><span>I am a parent or guardian of a BIST pupil and agree to BIST contacting me about Circle.</span></label>
+            <sc-if value="{{ memberError }}" hint-placeholder-val="{{ false }}">
+              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or email us at <a href="mailto:marketing@bist.ge" style="color: #C8102E;">marketing@bist.ge</a>.</p>
+            </sc-if>
+            <button type="submit" class="fbtn" disabled="{{ memberSending }}">{{ memberButton }}</button>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ partnerOpen }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Partner form popup" onClick="{{ closePartner }}" style="position: fixed; inset: 0; z-index: 100; background: rgba(13,27,62,.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px;">
+      <div onClick="{{ stopClick }}" style="background: #FFFFFF; border-radius: 24px; width: min(540px, 100%); max-height: 90vh; overflow-y: auto; overscroll-behavior: contain; padding: 32px; box-sizing: border-box; position: relative; box-shadow: 0 30px 80px rgba(13,27,62,.35);">
+        <button type="button" onClick="{{ closePartner }}" aria-label="Close" style="position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #E7E4DB; background: #FFFFFF; color: #0D1B3E; font-size: 15px; cursor: pointer;">✕</button>
+        <sc-if value="{{ partnerSent }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align: center; padding: 30px 8px 10px;">
+            <div style="width: 62px; height: 62px; border-radius: 50%; background: #F2B32C; color: #0D1B3E; font-size: 26px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">✓</div>
+            <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 10px;">Application received</h3>
+            <p style="margin: 0 auto 24px; font-size: 14.5px; line-height: 1.6; color: #5A6478; max-width: 40ch;">Thank you for your interest in Circle. Our team will review your offer and get back to you by email.</p>
+            <button type="button" onClick="{{ closePartner }}" style="background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 800; padding: 12px 24px; border-radius: 999px; cursor: pointer;">Back to the offers</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ partnerNotSent }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-bottom: 22px; padding-right: 40px;">
+            <img src="brand/circle-logo.png" alt="Circle" style="height: 46px; width: auto; display: block; margin-bottom: 14px;">
+            <div style="font-size: 11px; font-weight: 800; letter-spacing: .24em; color: #C8102E; margin-bottom: 8px;">FOR BUSINESSES</div>
+            <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em;">Register your business</h3>
+            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Tell us about your business and the offer you would like to make to BIST families.</p>
+          </div>
+          <form onSubmit="{{ submitPartner }}" style="display: flex; flex-direction: column; gap: 14px;">
+            <input type="text" name="_honey" autocomplete="off" aria-hidden="true" style="display: none;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+              <label class="flbl">BUSINESS NAME<input class="fld" type="text" name="business" autocomplete="organization" required="{{ true }}" placeholder="Company name"></label>
+              <label class="flbl">CATEGORY<select class="fld" name="category" required="{{ true }}" defaultValue=""><option value="" disabled="{{ true }}">Choose a category</option><option>Wellness &amp; Sport</option><option>Travel &amp; Leisure</option><option>Healthcare</option><option>Entertainment</option><option>Gastronomy</option><option>Automotive</option><option>Expat Services</option><option>Other</option></select></label>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+              <label class="flbl">CONTACT PERSON<input class="fld" type="text" name="contact" autocomplete="name" required="{{ true }}" placeholder="Full name"></label>
+              <label class="flbl">PHONE<input class="fld" type="tel" name="phone" autocomplete="tel" required="{{ true }}" placeholder="+995"></label>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+              <label class="flbl">EMAIL<input class="fld" type="email" name="email" autocomplete="email" required="{{ true }}" placeholder="name@company.ge"></label>
+              <label class="flbl">WEBSITE OR SOCIAL PAGE<input class="fld" type="text" name="website" placeholder="Optional"></label>
+            </div>
+            <label class="flbl">YOUR PROPOSED OFFER<textarea class="fld" name="offer" rows="{{ three }}" required="{{ true }}" placeholder="e.g. 15% off the full menu for Circle members" style="resize: vertical;"></textarea></label>
+            <sc-if value="{{ partnerError }}" hint-placeholder-val="{{ false }}">
+              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or email us at <a href="mailto:marketing@bist.ge" style="color: #C8102E;">marketing@bist.ge</a>.</p>
+            </sc-if>
+            <button type="submit" class="fbtn" disabled="{{ partnerSending }}">{{ partnerButton }}</button>
+          </form>
+        </sc-if>
       </div>
     </div>
   </sc-if>
@@ -344,7 +470,7 @@
           <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
             <a href="tel:+995322801919" style="color: rgba(255,255,255,.85); text-decoration: none;">+995 322 80 19 19</a>
             <a href="mailto:marketing@bist.ge" style="color: rgba(255,255,255,.85); text-decoration: none;">marketing@bist.ge</a>
-            <a href="{{ feedbackMail }}" style="color: #F2B32C; text-decoration: none; font-weight: 700;">Share feedback about an offer</a>
+            <a href="{{ feedbackMail }}" onClick="{{ feedbackClick }}" style="color: #F2B32C; text-decoration: none; font-weight: 700;">Share feedback about an offer</a>
           </div>
         </div>
         <div>
@@ -367,13 +493,13 @@
   &quot;showTerms&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Offers&quot; }
 }">
 class Component extends DCLogic {
-  state = { slide: 0, cat: "All", paused: false, menuOpen: false, detailIdx: null };
+  state = { slide: 0, cat: "All", q: "", paused: false, menuOpen: false, detailIdx: null, memberOpen: false, memberForm: "idle", partnerOpen: false, partnerForm: "idle" };
 
-  CATS = ["Wellness & Sport", "Travel", "Medicine", "Entertainment", "Food", "Automotive", "Other"];
+  CATS = ["Wellness & Sport", "Travel & Leisure", "Healthcare", "Entertainment", "Gastronomy", "Automotive", "Expat Services", "Other"];
 
   OFFERS = [
     {
-      cat: "Wellness & Sport",
+      cats: ["Wellness & Sport"],
       partner: "Technogym",
       badge: "−10%",
       logo: "logos/technogym.png",
@@ -385,7 +511,7 @@ class Component extends DCLogic {
       conditions: ["Retail purchases in store only", "Card payment only"]
     },
     {
-      cat: "Travel",
+      cats: ["Travel & Leisure", "Expat Services"],
       partner: "Premium Georgia",
       badge: "−15%",
       logo: "logos/premium-georgia.png",
@@ -397,7 +523,7 @@ class Component extends DCLogic {
       conditions: ["15% applies to all Premium Georgia services", "Includes priority consultations and priority booking in high season", "Complimentary travel, lifestyle and relocation consultations"]
     },
     {
-      cat: "Travel",
+      cats: ["Travel & Leisure"],
       partner: "Kabadoni Boutique Hotel",
       badge: "−30%",
       logo: "logos/kabadoni.png",
@@ -409,7 +535,7 @@ class Component extends DCLogic {
       conditions: ["Bookings are subject to availability and prior confirmation by the hotel", "The discount applies to the hotel's standard published rates; retail bookings only"]
     },
     {
-      cat: "Travel",
+      cats: ["Travel & Leisure"],
       partner: "Samzeo Kvareli",
       badge: "−30%",
       logo: "logos/samzeo-kvareli.png",
@@ -421,7 +547,7 @@ class Component extends DCLogic {
       conditions: ["Bookings are subject to availability and prior confirmation by the hotel", "The discount applies to the hotel's standard published rates; retail bookings only"]
     },
     {
-      cat: "Travel",
+      cats: ["Travel & Leisure"],
       partner: "Le Port Batumi",
       badge: "−30%",
       logo: "logos/le-port.png",
@@ -433,7 +559,7 @@ class Component extends DCLogic {
       conditions: ["Bookings are subject to availability and prior confirmation by the hotel", "The discount applies to the hotel's standard published rates; retail bookings only"]
     },
     {
-      cat: "Medicine",
+      cats: ["Healthcare"],
       partner: "Caucasus Medical Centre",
       badge: "−10–15%",
       logo: "logos/cmc.png",
@@ -445,7 +571,7 @@ class Component extends DCLogic {
       conditions: ["15% off outpatient services and 10% off standard and individual Check-Up packages", "Not valid on services that are already discounted"]
     },
     {
-      cat: "Medicine",
+      cats: ["Healthcare"],
       partner: "Caraps Medline",
       badge: "−20%",
       logo: "logos/caraps-medline.png",
@@ -457,7 +583,7 @@ class Component extends DCLogic {
       conditions: ["Includes injectable and device-based treatments, laser hair removal, dermatologist consultations, skin diagnostics and the acne treatment programme", "Not valid on services that are already discounted; discounts are not cumulative"]
     },
     {
-      cat: "Medicine",
+      cats: ["Healthcare"],
       partner: "MediClubGeorgia",
       badge: "Priority access",
       logo: "logos/mediclubgeorgia.png",
@@ -469,7 +595,7 @@ class Component extends DCLogic {
       conditions: ["Includes preferential access to MediClubGeorgia medical services, 24/7 support from a dedicated Healthcare Service Manager and tailored preventive health screenings for children and parents"]
     },
     {
-      cat: "Entertainment",
+      cats: ["Entertainment"],
       partner: "Museum of Illusions",
       badge: "Up to −46%",
       logo: "logos/museum-of-illusions.png",
@@ -481,7 +607,7 @@ class Component extends DCLogic {
       conditions: ["Museum of Illusions only: 25 GEL instead of 40 GEL", "Combined with one more museum (Holoseum or Planetarium): 35 GEL instead of 65 GEL", "All three museums: 45 GEL instead of 80 GEL", "Prices are per adult (18+); visitors under 18 pay the standard children's ticket price", "Individual (non-group) visits; group prices by arrangement; not combinable with other discounts"]
     },
     {
-      cat: "Entertainment",
+      cats: ["Entertainment"],
       partner: "Holoseum",
       badge: "Up to −46%",
       logo: "logos/holoseum.png",
@@ -493,7 +619,7 @@ class Component extends DCLogic {
       conditions: ["Holoseum only: 25 GEL instead of 40 GEL", "Combined with one more museum (Museum of Illusions or Planetarium): 35 GEL instead of 65 GEL", "All three museums: 45 GEL instead of 80 GEL", "Prices are per adult (18+); visitors under 18 pay the standard children's ticket price", "Individual (non-group) visits; group prices by arrangement; not combinable with other discounts"]
     },
     {
-      cat: "Entertainment",
+      cats: ["Entertainment"],
       partner: "Planetarium",
       badge: "Up to −46%",
       logo: "logos/planetarium.png",
@@ -505,7 +631,7 @@ class Component extends DCLogic {
       conditions: ["Planetarium only: 25 GEL instead of 40 GEL", "Combined with one more museum (Museum of Illusions or Holoseum): 35 GEL instead of 65 GEL", "All three museums: 45 GEL instead of 80 GEL", "Prices are per adult (18+); visitors under 18 pay the standard children's ticket price", "Individual (non-group) visits; group prices by arrangement; not combinable with other discounts"]
     },
     {
-      cat: "Food",
+      cats: ["Gastronomy", "Travel & Leisure"],
       partner: "The Biltmore Tbilisi",
       badge: "−10–20%",
       logo: "logos/biltmore.png",
@@ -517,7 +643,7 @@ class Component extends DCLogic {
       conditions: ["Birthday packages from 120 GEL per person; venues: Xeme Restaurant (31st floor, for 15 to 20 guests) or Xeme Bar (30th floor, for 25 to 80 guests, private use)", "Chef-attended live stations, bespoke birthday cakes and extra decor are available at additional cost", "20% off the hotel's published room rates for all room categories, except 30 December to 5 January"]
     },
     {
-      cat: "Food",
+      cats: ["Travel & Leisure", "Gastronomy"],
       partner: "Khedi Hotel",
       badge: "−10%",
       logo: "logos/khedi.png",
@@ -529,7 +655,7 @@ class Component extends DCLogic {
       conditions: ["Applies to published prices only and cannot be combined with other discounts or already discounted offers", "Retail purchases only"]
     },
     {
-      cat: "Food",
+      cats: ["Gastronomy"],
       partner: "Restaurant Andazi",
       badge: "−20%",
       logo: "logos/andazi.png",
@@ -541,7 +667,7 @@ class Component extends DCLogic {
       conditions: ["Applies to the restaurant's standard menu prices; retail, in-person visits only"]
     },
     {
-      cat: "Automotive",
+      cats: ["Automotive"],
       partner: "GeoWrap",
       badge: "−5–40%",
       logo: "logos/geowrap.png",
@@ -553,7 +679,7 @@ class Component extends DCLogic {
       conditions: ["Programme prices are fixed in the agreement, for example full-vehicle clear gloss paint protection film for a sedan at 9,990 GEL instead of 10,530 GEL, film for high-risk areas at 4,860 GEL instead of 5,400 GEL, and a 6-month Gyeon ceramic coat at 800 GEL instead of 1,000 GEL", "Retail, in-person purchases at the studio only"]
     },
     {
-      cat: "Other",
+      cats: ["Expat Services"],
       partner: "ExpatHub",
       badge: "−15%",
       logo: "logos/expathub.png",
@@ -565,7 +691,7 @@ class Component extends DCLogic {
       conditions: ["Covers legal, tax and accounting services, including study residence permits for students and parents and real-estate purchases", "Priority scheduling for Circle members"]
     },
     {
-      cat: "Other",
+      cats: ["Other"],
       partner: "Sakhli7",
       badge: "−5–15%",
       logo: "logos/sakhli7.png",
@@ -577,7 +703,7 @@ class Component extends DCLogic {
       conditions: ["The rate (5 to 15%) applies according to product category", "Retail, in-person purchases only"]
     },
     {
-      cat: "Other",
+      cats: ["Expat Services"],
       partner: "Origen Collection",
       badge: "Free advisory",
       logo: "logos/origen-collection.png",
@@ -592,13 +718,13 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.startTimer();
-    this.onKey = (e) => { if (e.key === "Escape") this.setState({ menuOpen: false, detailIdx: null }); };
+    this.onKey = (e) => { if (e.key === "Escape") this.setState({ menuOpen: false, detailIdx: null, memberOpen: false, partnerOpen: false }); };
     window.addEventListener("keydown", this.onKey);
   }
-  componentWillUnmount() { clearInterval(this.timer); window.removeEventListener("keydown", this.onKey); document.body.style.overflow = ""; }
+  componentWillUnmount() { clearInterval(this.timer); clearTimeout(this.searchTimer); window.removeEventListener("keydown", this.onKey); document.body.style.overflow = ""; }
   componentDidUpdate(prevProps) {
     if (prevProps.slideSeconds !== this.props.slideSeconds || prevProps.autoplay !== this.props.autoplay) this.startTimer();
-    document.body.style.overflow = this.state.detailIdx !== null ? "hidden" : "";
+    document.body.style.overflow = this.state.detailIdx !== null || this.state.memberOpen || this.state.partnerOpen ? "hidden" : "";
   }
   startTimer() {
     clearInterval(this.timer);
@@ -608,24 +734,55 @@ class Component extends DCLogic {
     }, s * 1000);
   }
 
+  track(name, params) {
+    if (window.gtag) window.gtag("event", name, params || {});
+  }
+
+  sendForm(e, form, subject, event) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    if (fd.get("_honey")) return;
+    const payload = {};
+    fd.forEach((v, k) => { if (k !== "_honey") payload[k] = v; });
+    payload._subject = subject(payload);
+    payload._template = "table";
+    payload._captcha = "false";
+    this.setState({ [form]: "sending" });
+    fetch("https://formsubmit.co/ajax/marketing@bist.ge", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload) })
+      .then(r => r.json())
+      .then(d => {
+        if (String(d.success) !== "true") throw new Error(d.message);
+        this.setState({ [form]: "sent" });
+        this.track(event.name, event.params);
+      })
+      .catch(() => this.setState({ [form]: "error" }));
+  }
+
   renderVals() {
-    const { slide, cat } = this.state;
+    const { slide, cat, q, memberForm, partnerForm } = this.state;
     const chipBase = { display: "inline-flex", alignItems: "center", gap: "7px", padding: "10px 16px", borderRadius: "999px", border: "1px solid #D8D4C6", background: "#FFFFFF", color: "#0D1B3E", fontFamily: "Manrope, sans-serif", fontSize: "13.5px", fontWeight: 700, cursor: "pointer", transition: "all .25s" };
-    const activeCats = this.CATS.filter(c => this.OFFERS.some(o => o.cat === c));
+    const activeCats = this.CATS.filter(c => this.OFFERS.some(o => o.cats.includes(c)));
     const chips = ["All", ...activeCats].map(c => ({
       label: c === "All" ? "All offers" : c,
-      count: c === "All" ? this.OFFERS.length : this.OFFERS.filter(o => o.cat === c).length,
-      onClick: () => this.setState({ cat: c }),
+      count: c === "All" ? this.OFFERS.length : this.OFFERS.filter(o => o.cats.includes(c)).length,
+      onClick: () => { this.setState({ cat: c }); this.track("select_category", { category: c }); },
       style: c === cat ? { ...chipBase, background: "#0D1B3E", color: "#FFFFFF", borderColor: "#0D1B3E" } : chipBase
     }));
     const LINK_LABEL = { web: "Website", facebook: "Facebook", instagram: "Instagram" };
+    const LINK_CTA = { web: "Visit website", facebook: "Facebook page", instagram: "Instagram page" };
     const decorate = o => {
-      const links = (o.links || []).map(l => ({ ...l, label: LINK_LABEL[l.kind] || "Link", isWeb: l.kind === "web", isFb: l.kind === "facebook", isIg: l.kind === "instagram", title: LINK_LABEL[l.kind] + " of " + o.partner, text: l.kind === "web" ? new URL(l.url).hostname.replace(/^www\./, "") : LINK_LABEL[l.kind] }));
+      const links = (o.links || []).map(l => ({ ...l, label: LINK_LABEL[l.kind] || "Link", cta: LINK_CTA[l.kind] || "Visit", isWeb: l.kind === "web", isFb: l.kind === "facebook", isIg: l.kind === "instagram", title: LINK_LABEL[l.kind] + " of " + o.partner,
+        onClick: (e) => { e.stopPropagation(); this.track("partner_link_click", { partner: o.partner, link_type: l.kind }); } }));
       const primary = ["web", "facebook", "instagram"].map(k => links.find(l => l.kind === k)).find(Boolean);
-      return { ...o, links, hasLinks: links.length > 0, cardLinks: primary ? [primary] : [] };
+      return { ...o, catLabel: o.cats.join(" · "), links, hasLinks: links.length > 0, cardLinks: primary ? [primary] : [] };
     };
-    const cards = (cat === "All" ? this.OFFERS : this.OFFERS.filter(o => o.cat === cat))
-      .map(o => ({ ...decorate(o), open: () => this.setState({ detailIdx: this.OFFERS.indexOf(o) }) }));
+    const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+    const matches = o => {
+      const text = [o.partner, o.desc, o.benefit, o.cats.join(" "), o.activation].join(" ").toLowerCase();
+      return terms.every(t => text.includes(t));
+    };
+    const cards = this.OFFERS.filter(o => (cat === "All" || o.cats.includes(cat)) && matches(o))
+      .map(o => ({ ...decorate(o), open: () => { this.setState({ detailIdx: this.OFFERS.indexOf(o) }); this.track("select_content", { content_type: "offer", item_id: o.partner }); } }));
     const detail = this.state.detailIdx === null ? null : decorate(this.OFFERS[this.state.detailIdx]);
     const mail = (subject, body) => "mailto:marketing@bist.ge?subject=" + encodeURIComponent(subject) + (body ? "&body=" + encodeURIComponent(body) : "");
     const dots = [0, 1, 2].map(i => ({
@@ -643,6 +800,35 @@ class Component extends DCLogic {
       toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
       closeMenu: () => this.setState({ menuOpen: false }),
       menuOpen: this.state.menuOpen,
+      q,
+      onSearch: (e) => {
+        const value = e.target.value;
+        this.setState({ q: value });
+        clearTimeout(this.searchTimer);
+        if (value.trim()) this.searchTimer = setTimeout(() => this.track("search", { search_term: value.trim() }), 900);
+      },
+      clearFilters: () => this.setState({ q: "", cat: "All" }),
+      noResults: cards.length === 0,
+      openMember: () => { this.setState({ memberOpen: true, memberForm: "idle", menuOpen: false }); this.track("form_open", { form: "member" }); },
+      closeMember: () => this.setState({ memberOpen: false }),
+      memberOpen: this.state.memberOpen,
+      memberSent: memberForm === "sent",
+      memberNotSent: memberForm !== "sent",
+      memberSending: memberForm === "sending",
+      memberError: memberForm === "error",
+      memberButton: memberForm === "sending" ? "Sending…" : "Register",
+      submitMember: (e) => this.sendForm(e, "memberForm", p => "Circle membership registration: " + p.name, { name: "sign_up", params: { method: "circle_form" } }),
+      openPartner: () => { this.setState({ partnerOpen: true, partnerForm: "idle" }); this.track("form_open", { form: "partner" }); },
+      closePartner: () => this.setState({ partnerOpen: false }),
+      partnerOpen: this.state.partnerOpen,
+      partnerSent: partnerForm === "sent",
+      partnerNotSent: partnerForm !== "sent",
+      partnerSending: partnerForm === "sending",
+      partnerError: partnerForm === "error",
+      partnerButton: partnerForm === "sending" ? "Sending…" : "Send application",
+      submitPartner: (e) => this.sendForm(e, "partnerForm", p => "Circle partner application: " + p.business, { name: "generate_lead", params: { lead_type: "partner" } }),
+      feedbackClick: () => { this.setState({ menuOpen: false }); this.track("feedback_click"); },
+      three: 3,
       menuIcon: this.state.menuOpen ? "✕" : "☰",
       stopClick: (e) => e.stopPropagation(),
       detail,
@@ -650,9 +836,10 @@ class Component extends DCLogic {
       closeDetail: () => this.setState({ detailIdx: null }),
       feedbackMail: mail("Circle feedback"),
       detailFeedbackMail: mail("Circle feedback: " + (detail ? detail.partner : "general")),
-      partnerMail: mail("Circle partnership enquiry", "Business name:\nCategory:\nContact person:\nPhone:\n\nProposed offer for BIST families:\n"),
       dots, chips, cards,
-      offerCountLabel: `${cards.length} ${cards.length === 1 ? "offer" : "offers"}${cat === "All" ? ` · ${activeCats.length} ${activeCats.length === 1 ? "category" : "categories"}` : ""}`,
+      offerCountLabel: cat === "All" && !terms.length
+        ? `${this.OFFERS.length} offers · ${activeCats.length} categories`
+        : `${cards.length} of ${this.OFFERS.length} offers`,
       showNotes: this.props.showTerms ?? true
     };
   }
