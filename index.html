@@ -922,6 +922,12 @@ class Component extends DCLogic {
   }
 
   renderVals() {
+    if (!this.offersShuffled) {
+      // Show the partners in a fresh random order on every visit, so that no offer is always on top.
+      const a = this.OFFERS;
+      for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+      this.offersShuffled = true;
+    }
     const { slide, cat, q, memberForm, partnerForm } = this.state;
     const chipBase = { display: "inline-flex", alignItems: "center", gap: "7px", padding: "10px 16px", borderRadius: "999px", border: "1px solid #D8D4C6", background: "#FFFFFF", color: "#0D1B3E", fontFamily: "Manrope, sans-serif", fontSize: "13.5px", fontWeight: 700, cursor: "pointer", transition: "all .25s" };
     const activeCats = this.CATS.filter(c => this.OFFERS.some(o => o.cats.includes(c)));
