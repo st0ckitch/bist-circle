@@ -495,7 +495,7 @@
 class Component extends DCLogic {
   state = { slide: 0, cat: "All", q: "", paused: false, menuOpen: false, detailIdx: null, memberOpen: false, memberForm: "idle", partnerOpen: false, partnerForm: "idle" };
 
-  CATS = ["Wellness & Sport", "Travel & Leisure", "Healthcare", "Entertainment", "Gastronomy", "Automotive", "Expat Services", "Other"];
+  CATS = ["Wellness & Sport", "Travel & Leisure", "Healthcare", "Entertainment", "Gastronomy", "Beauty & Personal Care", "Shopping", "Automotive", "Expat Services", "Other"];
 
   OFFERS = [
     {
@@ -811,7 +811,7 @@ class Component extends DCLogic {
       conditions: ["The rate (5 to 15%) applies according to product category", "Retail, in-person purchases only"]
     },
     {
-      cats: ["Other"],
+      cats: ["Beauty & Personal Care", "Shopping"],
       partner: "Lutecia",
       badge: "VIP Card",
       logo: "logos/lutecia.png",
@@ -823,7 +823,7 @@ class Component extends DCLogic {
       conditions: ["Retail, in-person purchases at any Lutecia store", "The loyalty card is personal and cannot be transferred to another person", "Payment by bank card in the same name as on your parent card"]
     },
     {
-      cats: ["Other"],
+      cats: ["Shopping"],
       partner: "Suwen",
       badge: "−30%",
       logo: "logos/suwen.png",
@@ -835,7 +835,7 @@ class Component extends DCLogic {
       conditions: ["Applies to non-discounted products only", "Retail, in-person purchases at any Suwen store in Georgia", "Payment by bank card in the same name as on your parent card"]
     },
     {
-      cats: ["Other"],
+      cats: ["Shopping"],
       partner: "Scalpers",
       badge: "−20%",
       logo: "logos/scalpers.png",
