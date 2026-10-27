@@ -400,10 +400,13 @@
               <label class="flbl">EMAIL<input class="fld" type="email" name="email" autocomplete="email" required="{{ true }}" placeholder="name@example.com"></label>
               <label class="flbl">PHONE<input class="fld" type="tel" name="phone" autocomplete="tel" required="{{ true }}" placeholder="+995"></label>
             </div>
-            <label class="flbl">CHILD'S NAME AND YEAR GROUP<input class="fld" type="text" name="child" required="{{ true }}" placeholder="e.g. Nino K., Year 4"></label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+              <label class="flbl">CHILD'S FULL NAME<input class="fld" type="text" name="child" autocomplete="off" required="{{ true }}" placeholder="e.g. Nino Beridze"></label>
+              <label class="flbl">YEAR GROUP<input class="fld" type="text" name="grade" autocomplete="off" required="{{ true }}" placeholder="e.g. Year 4"></label>
+            </div>
             <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 600; line-height: 1.5; color: #5A6478;"><input type="checkbox" name="consent" value="yes" required="{{ true }}" style="margin-top: 3px; accent-color: #0D1B3E;"><span>I am a parent or guardian of a BIST pupil and agree to BIST contacting me about Circle.</span></label>
             <sc-if value="{{ memberError }}" hint-placeholder-val="{{ false }}">
-              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or email us at <a href="mailto:marketing@bist.ge" style="color: #C8102E;">marketing@bist.ge</a>.</p>
+              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or email us at <a href="mailto:circle@bist.ge" style="color: #C8102E;">circle@bist.ge</a>.</p>
             </sc-if>
             <button type="submit" class="fbtn" disabled="{{ memberSending }}">{{ memberButton }}</button>
           </form>
@@ -447,7 +450,7 @@
             </div>
             <label class="flbl">YOUR PROPOSED OFFER<textarea class="fld" name="offer" rows="{{ three }}" required="{{ true }}" placeholder="e.g. 15% off the full menu for Circle members" style="resize: vertical;"></textarea></label>
             <sc-if value="{{ partnerError }}" hint-placeholder-val="{{ false }}">
-              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or email us at <a href="mailto:marketing@bist.ge" style="color: #C8102E;">marketing@bist.ge</a>.</p>
+              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or email us at <a href="mailto:circle@bist.ge" style="color: #C8102E;">circle@bist.ge</a>.</p>
             </sc-if>
             <button type="submit" class="fbtn" disabled="{{ partnerSending }}">{{ partnerButton }}</button>
           </form>
@@ -469,7 +472,7 @@
           <div style="font-size: 11px; font-weight: 800; letter-spacing: .2em; color: #F2B32C; margin-bottom: 14px;">BIST</div>
           <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
             <a href="tel:+995322801919" style="color: rgba(255,255,255,.85); text-decoration: none;">+995 322 80 19 19</a>
-            <a href="mailto:marketing@bist.ge" style="color: rgba(255,255,255,.85); text-decoration: none;">marketing@bist.ge</a>
+            <a href="mailto:circle@bist.ge" style="color: rgba(255,255,255,.85); text-decoration: none;">circle@bist.ge</a>
             <a href="{{ feedbackMail }}" onClick="{{ feedbackClick }}" style="color: #F2B32C; text-decoration: none; font-weight: 700;">Share feedback about an offer</a>
           </div>
         </div>
@@ -892,7 +895,7 @@ class Component extends DCLogic {
     payload._template = "table";
     payload._captcha = "false";
     this.setState({ [form]: "sending" });
-    fetch("https://formsubmit.co/ajax/marketing@bist.ge", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload) })
+    fetch("https://formsubmit.co/ajax/circle@bist.ge", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload) })
       .then(r => r.json())
       .then(d => {
         if (String(d.success) !== "true") throw new Error(d.message);
@@ -928,7 +931,7 @@ class Component extends DCLogic {
     const cards = this.OFFERS.filter(o => (cat === "All" || o.cats.includes(cat)) && matches(o))
       .map(o => ({ ...decorate(o), open: () => { this.setState({ detailIdx: this.OFFERS.indexOf(o) }); this.track("select_content", { content_type: "offer", item_id: o.partner }); } }));
     const detail = this.state.detailIdx === null ? null : decorate(this.OFFERS[this.state.detailIdx]);
-    const mail = (subject, body) => "mailto:marketing@bist.ge?subject=" + encodeURIComponent(subject) + (body ? "&body=" + encodeURIComponent(body) : "");
+    const mail = (subject, body) => "mailto:circle@bist.ge?subject=" + encodeURIComponent(subject) + (body ? "&body=" + encodeURIComponent(body) : "");
     const dots = [0, 1, 2].map(i => ({
       onClick: () => this.setState({ slide: i }),
       style: { width: i === slide ? "34px" : "16px", height: "4px", borderRadius: "99px", border: "none", padding: 0, cursor: "pointer", transition: "all .3s", background: i === slide ? "#F2B32C" : "rgba(255,255,255,.35)" }
