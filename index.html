@@ -949,7 +949,9 @@ class Component extends DCLogic {
       this.track(event.name, event.params);
     };
     const timer = setTimeout(sent, 4000);
-    fetch("https://formsubmit.co/ajax/circle@bist.ge", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload) })
+    // Send plain form fields, not JSON: a JSON body makes the browser ask FormSubmit for CORS permission first
+    // (a preflight), and FormSubmit's preflight answer has been missing the header browsers need, so the send was blocked.
+    fetch("https://formsubmit.co/ajax/circle@bist.ge", { method: "POST", headers: { "Accept": "application/json" }, body: new URLSearchParams(payload) })
       .then(r => r.json().catch(() => { throw new Error("HTTP " + r.status + ", not JSON"); }))
       .then(d => {
         if (String(d.success) !== "true") throw new Error(d.message);
