@@ -406,7 +406,7 @@
             </div>
             <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 600; line-height: 1.5; color: #5A6478;"><input type="checkbox" name="consent" value="yes" required="{{ true }}" style="margin-top: 3px; accent-color: #0D1B3E;"><span>I am a parent or guardian of a BIST pupil and agree to BIST contacting me about Circle.</span></label>
             <sc-if value="{{ memberError }}" hint-placeholder-val="{{ false }}">
-              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or email us at <a href="mailto:circle@bist.ge" style="color: #C8102E;">circle@bist.ge</a>.</p>
+              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or <a href="{{ memberMailto }}" style="color: #C8102E;">send it to us by email</a> (circle@bist.ge).</p>
             </sc-if>
             <button type="submit" class="fbtn" disabled="{{ memberSending }}">{{ memberButton }}</button>
           </form>
@@ -450,7 +450,7 @@
             </div>
             <label class="flbl">YOUR PROPOSED OFFER<textarea class="fld" name="offer" rows="{{ three }}" required="{{ true }}" placeholder="e.g. 15% off the full menu for Circle members" style="resize: vertical;"></textarea></label>
             <sc-if value="{{ partnerError }}" hint-placeholder-val="{{ false }}">
-              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or email us at <a href="mailto:circle@bist.ge" style="color: #C8102E;">circle@bist.ge</a>.</p>
+              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or <a href="{{ partnerMailto }}" style="color: #C8102E;">send it to us by email</a> (circle@bist.ge).</p>
             </sc-if>
             <button type="submit" class="fbtn" disabled="{{ partnerSending }}">{{ partnerButton }}</button>
           </form>
@@ -490,7 +490,7 @@
               <label class="flbl">EMAIL<input class="fld" type="email" name="email" autocomplete="email" placeholder="Optional, for a reply"></label>
             </div>
             <sc-if value="{{ feedbackError }}" hint-placeholder-val="{{ false }}">
-              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or email us at <a href="mailto:circle@bist.ge" style="color: #C8102E;">circle@bist.ge</a>.</p>
+              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or <a href="{{ feedbackMailto }}" style="color: #C8102E;">send it to us by email</a> (circle@bist.ge).</p>
             </sc-if>
             <button type="submit" class="fbtn" disabled="{{ feedbackSending }}">{{ feedbackButton }}</button>
           </form>
@@ -934,6 +934,9 @@ class Component extends DCLogic {
     payload._subject = subject(payload);
     payload._template = "table";
     payload._captcha = "false";
+    // If sending fails, the error message offers an email to circle@bist.ge with the details already filled in.
+    const lines = Object.keys(payload).filter(k => k[0] !== "_").map(k => k + ": " + payload[k]);
+    this.failedMail = { ...this.failedMail, [form]: "mailto:circle@bist.ge?subject=" + encodeURIComponent(payload._subject) + "&body=" + encodeURIComponent(lines.join("\n")) };
     this.setState({ [form]: "sending" });
     // FormSubmit only answers once it has emailed the submission, which can take a long time.
     // Wait up to 4 seconds for its answer, then thank the visitor while the request finishes in the background.
@@ -947,17 +950,18 @@ class Component extends DCLogic {
     };
     const timer = setTimeout(sent, 4000);
     fetch("https://formsubmit.co/ajax/circle@bist.ge", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload) })
-      .then(r => r.json())
+      .then(r => r.json().catch(() => { throw new Error("HTTP " + r.status + ", not JSON"); }))
       .then(d => {
         if (String(d.success) !== "true") throw new Error(d.message);
         sent();
       })
-      .catch(() => {
-        if (shown) { this.track("form_error", { form: form, after_thanks: true }); return; }
+      .catch(err => {
+        const reason = String((err && err.message) || err).slice(0, 100);
+        if (shown) { this.track("form_error", { form: form, after_thanks: true, reason: reason }); return; }
         shown = true;
         clearTimeout(timer);
         this.setState({ [form]: "error" });
-        this.track("form_error", { form: form });
+        this.track("form_error", { form: form, reason: reason });
       });
   }
 
@@ -1024,6 +1028,7 @@ class Component extends DCLogic {
       memberNotSent: memberForm !== "sent",
       memberSending: memberForm === "sending",
       memberError: memberForm === "error",
+      memberMailto: (this.failedMail && this.failedMail.memberForm) || "mailto:circle@bist.ge",
       memberButton: memberForm === "sending" ? "Sending…" : "Register",
       submitMember: (e) => this.sendForm(e, "memberForm", p => "Circle membership registration: " + p.name, { name: "sign_up", params: { method: "circle_form" } }),
       openPartner: () => { this.setState({ partnerOpen: true, partnerForm: "idle" }); this.track("form_open", { form: "partner" }); },
@@ -1033,6 +1038,7 @@ class Component extends DCLogic {
       partnerNotSent: partnerForm !== "sent",
       partnerSending: partnerForm === "sending",
       partnerError: partnerForm === "error",
+      partnerMailto: (this.failedMail && this.failedMail.partnerForm) || "mailto:circle@bist.ge",
       partnerButton: partnerForm === "sending" ? "Sending…" : "Send application",
       submitPartner: (e) => this.sendForm(e, "partnerForm", p => "Circle partner application: " + p.business, { name: "generate_lead", params: { lead_type: "partner" } }),
       three: 3,
@@ -1050,6 +1056,7 @@ class Component extends DCLogic {
       feedbackNotSent: feedbackForm !== "sent",
       feedbackSending: feedbackForm === "sending",
       feedbackError: feedbackForm === "error",
+      feedbackMailto: (this.failedMail && this.failedMail.feedbackForm) || "mailto:circle@bist.ge",
       feedbackButton: feedbackForm === "sending" ? "Sending…" : "Send feedback",
       submitFeedback: (e) => this.sendForm(e, "feedbackForm", p => "Circle feedback: " + (p.offer || "general"), { name: "feedback_submit", params: {} }),
       four: 4,
