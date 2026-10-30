@@ -112,11 +112,41 @@
     footer > div { padding: 48px 18px 24px !important; }
     footer > div > div:first-child { gap: 28px !important; padding-bottom: 30px !important; }
   }
+
+  /* The sign-in page that visitors see until they log in */
+  .gate { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); background: #F6F4EE; }
+  .gate-brand { position: relative; overflow: hidden; background: #0D1B3E; color: #FFFFFF; padding: 44px 56px; display: flex; flex-direction: column; gap: 34px; }
+  .gate-ring { position: absolute; right: -170px; top: -190px; width: 520px; height: 520px; border-radius: 50%; border: 1.5px solid rgba(242,179,44,.28); pointer-events: none; }
+  .gate-ring span { position: absolute; top: 50%; left: -7px; width: 14px; height: 14px; border-radius: 50%; background: #F2B32C; }
+  .gate-logo { position: relative; height: 60px; width: auto; display: block; align-self: flex-start; }
+  .gate-copy { position: relative; max-width: 540px; }
+  .gate-kicker { font-size: 12px; font-weight: 800; letter-spacing: .24em; color: #F2B32C; margin-bottom: 16px; }
+  .gate-title { font-family: Sora, sans-serif; font-weight: 800; font-size: clamp(30px, 3.4vw, 48px); line-height: 1.08; margin: 0 0 16px; letter-spacing: -0.01em; }
+  .gate-text { font-size: 16px; line-height: 1.6; color: rgba(255,255,255,.72); margin: 0; max-width: 46ch; }
+  .gate-photo { position: relative; margin-top: auto; max-width: 540px; }
+  .gate-photo::before { content: ""; position: absolute; inset: -12px 12px 12px -12px; border: 2px solid rgba(242,179,44,.45); border-radius: 26px; pointer-events: none; }
+  .gate-photo img { position: relative; width: 100%; height: clamp(200px, 22vw, 300px); object-fit: cover; border-radius: 22px; display: block; box-shadow: 0 28px 60px rgba(0,0,0,.4); }
+  .gate-contact { position: relative; display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; font-weight: 600; }
+  .gate-contact a { color: rgba(255,255,255,.75); text-decoration: none; }
+  .gate-contact a:hover { color: #F2B32C; }
+  .gate-main { display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
+  .gate-card { width: min(480px, 100%); background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 24px; padding: 32px; box-sizing: border-box; box-shadow: 0 24px 60px rgba(13,27,62,.10); }
+  @media (max-width: 900px) {
+    .gate { grid-template-columns: 1fr; }
+    .gate-brand { padding: 24px 20px 28px; gap: 18px; }
+    .gate-logo { height: 46px; }
+    .gate-title { font-size: 26px; }
+    .gate-text { font-size: 14.5px; }
+    .gate-photo, .gate-contact { display: none; }
+    .gate-main { align-items: flex-start; padding: 16px 12px 40px; }
+    .gate-card { padding: 24px 18px; }
+  }
 </style>
 </helmet>
 
 <div data-screen-label="Ambassador one-pager" style="min-width: 320px;">
 
+  <sc-if value="{{ showSite }}" hint-placeholder-val="{{ true }}">
   <nav style="position: sticky; top: 0; z-index: 60; background: rgba(246,244,238,.88); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(13,27,62,.08);">
     <div style="max-width: 1360px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
       <div style="display: flex; align-items: center; gap: 12px;">
@@ -127,8 +157,6 @@
         <a href="#offers" style="color: #0D1B3E; text-decoration: none; font-size: 14px; font-weight: 600;">Offers</a>
         <a href="#how" style="color: #0D1B3E; text-decoration: none; font-size: 14px; font-weight: 600;">How it works</a>
         <a href="#feedback" onClick="{{ openFeedback }}" style="color: #0D1B3E; text-decoration: none; font-size: 14px; font-weight: 600;">Feedback</a>
-        <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openLogin }}" style="background: none; border: none; padding: 0; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer;">{{ t.logIn }}</button></sc-if>
-        <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openJoin }}" style="background: transparent; border: 1px solid rgba(13,27,62,.3); color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 700; padding: 10px 18px; border-radius: 999px; cursor: pointer; transition: all .25s;" style-hover="border-color: #0D1B3E; background: #0D1B3E; color: #FFFFFF;">Become a member</button></sc-if>
         <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openAccount }}" style="background: transparent; border: 1px solid rgba(13,27,62,.3); color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 700; padding: 10px 18px; border-radius: 999px; cursor: pointer; transition: all .25s;" style-hover="border-color: #0D1B3E; background: #0D1B3E; color: #FFFFFF;">{{ t.myAccount }}</button></sc-if>
         <a href="#offers" style="background: #F2B32C; color: #0D1B3E; text-decoration: none; font-size: 13.5px; font-weight: 800; padding: 10px 18px; border-radius: 999px; transition: all .25s;" style-hover="background: #0D1B3E; color: #FFFFFF;">Browse offers</a>
       </div>
@@ -139,8 +167,6 @@
         <a href="#offers" onClick="{{ closeMenu }}" style="color: #0D1B3E; text-decoration: none; font-size: 16px; font-weight: 700; padding: 13px 6px;">Offers</a>
         <a href="#how" onClick="{{ closeMenu }}" style="color: #0D1B3E; text-decoration: none; font-size: 16px; font-weight: 700; padding: 13px 6px;">How it works</a>
         <a href="#feedback" onClick="{{ openFeedback }}" style="color: #0D1B3E; text-decoration: none; font-size: 16px; font-weight: 700; padding: 13px 6px;">Feedback</a>
-        <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openLogin }}" style="background: none; border: none; text-align: left; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 16px; font-weight: 700; padding: 13px 6px; cursor: pointer;">{{ t.logIn }}</button></sc-if>
-        <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openJoin }}" style="margin-top: 4px; border: 1px solid rgba(13,27,62,.3); background: transparent; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 15px; font-weight: 700; padding: 13px 18px; border-radius: 999px; cursor: pointer;">Become a member</button></sc-if>
         <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openAccount }}" style="margin-top: 4px; border: 1px solid rgba(13,27,62,.3); background: transparent; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 15px; font-weight: 700; padding: 13px 18px; border-radius: 999px; cursor: pointer;">{{ t.myAccount }}</button></sc-if>
         <a href="#offers" onClick="{{ closeMenu }}" style="background: #F2B32C; color: #0D1B3E; text-decoration: none; text-align: center; font-size: 15px; font-weight: 800; padding: 13px 18px; border-radius: 999px;">Browse offers</a>
       </div>
@@ -238,7 +264,7 @@
         <div style="font-family: Sora, sans-serif; font-weight: 800; font-size: 40px; color: #F2B32C; margin-bottom: 14px;">01</div>
         <div style="font-size: 17px; font-weight: 800; margin-bottom: 8px;">Register as a member</div>
         <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Create your Circle account in a minute. Parents and guardians register with their child's personal number, and BIST staff with their work email.</p>
-        <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openJoin }}" style="margin-top: 16px; align-self: flex-start; background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; padding: 11px 18px; border-radius: 999px; cursor: pointer; transition: all .25s;" style-hover="background: #F2B32C; color: #0D1B3E;">Register now</button></sc-if><sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openAccount }}" style="margin-top: 16px; align-self: flex-start; background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; padding: 11px 18px; border-radius: 999px; cursor: pointer; transition: all .25s;" style-hover="background: #F2B32C; color: #0D1B3E;">{{ t.myAccount }}</button></sc-if>
+        <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openAccount }}" style="margin-top: 16px; align-self: flex-start; background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; padding: 11px 18px; border-radius: 999px; cursor: pointer; transition: all .25s;" style-hover="background: #F2B32C; color: #0D1B3E;">{{ t.myAccount }}</button></sc-if>
       </div>
       <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 20px; padding: 26px; display: flex; flex-direction: column;">
         <div style="font-family: Sora, sans-serif; font-weight: 800; font-size: 40px; color: #F2B32C; margin-bottom: 14px;">02</div>
@@ -271,6 +297,17 @@
       <div style="font-size: 14px; font-weight: 600; color: #5A6478;">{{ offerCountLabel }}</div>
     </div>
 
+    <sc-if value="{{ offersLoading }}" hint-placeholder-val="{{ false }}">
+      <div role="status" style="padding: 48px 0; text-align: center; font-size: 15px; font-weight: 700; color: #5A6478;">{{ t.loadingOffers }}</div>
+    </sc-if>
+    <sc-if value="{{ offersFailed }}" hint-placeholder-val="{{ false }}">
+      <div style="background: #FFFFFF; border: 1px solid #E7E4DB; border-radius: 22px; padding: 40px 28px; text-align: center;">
+        <div style="font-size: 17px; font-weight: 800; margin-bottom: 6px;">{{ t.failedTitle }}</div>
+        <p style="margin: 0 0 16px; font-size: 14px; color: #5A6478;">{{ t.failedText }}</p>
+        <button onClick="{{ retryOffers }}" style="background: transparent; border: 1px solid rgba(13,27,62,.3); color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 700; padding: 13px 24px; border-radius: 999px; cursor: pointer;">{{ t.retry }}</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ showOffers }}" hint-placeholder-val="{{ true }}">
     <div style="position: relative; max-width: 480px; margin-bottom: 16px;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; left: 17px; top: 50%; width: 17px; height: 17px; margin-top: -8.5px; color: #5A6478; pointer-events: none;"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
       <input type="search" class="search" value="{{ q }}" onChange="{{ onSearch }}" placeholder="Search offers, partners or categories" aria-label="Search offers">
@@ -312,6 +349,7 @@
         <p style="margin: 0 0 16px; font-size: 14px; color: #5A6478;">Try another word, or show every offer again.</p>
         <button onClick="{{ clearFilters }}" style="background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; padding: 11px 20px; border-radius: 999px; cursor: pointer;">Show all offers</button>
       </div>
+    </sc-if>
     </sc-if>
   </section>
 
@@ -378,7 +416,227 @@
     </div>
   </sc-if>
 
-  <sc-if value="{{ authOpen }}" hint-placeholder-val="{{ false }}">
+  <sc-if value="{{ feedbackOpen }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Feedback form popup" onClick="{{ closeFeedback }}" style="position: fixed; inset: 0; z-index: 100; background: rgba(13,27,62,.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px;">
+      <div onClick="{{ stopClick }}" style="background: #FFFFFF; border-radius: 24px; width: min(540px, 100%); max-height: 90vh; overflow-y: auto; overscroll-behavior: contain; padding: 32px; box-sizing: border-box; position: relative; box-shadow: 0 30px 80px rgba(13,27,62,.35);">
+        <button type="button" onClick="{{ closeFeedback }}" aria-label="Close" style="position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #E7E4DB; background: #FFFFFF; color: #0D1B3E; font-size: 15px; cursor: pointer;">✕</button>
+        <sc-if value="{{ feedbackSent }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align: center; padding: 30px 8px 10px;">
+            <div style="width: 62px; height: 62px; border-radius: 50%; background: #F2B32C; color: #0D1B3E; font-size: 26px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">✓</div>
+            <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 10px;">Thank you!</h3>
+            <p style="margin: 0 auto 24px; font-size: 14.5px; line-height: 1.6; color: #5A6478; max-width: 40ch;">Your feedback has been received. It helps us make Circle better.</p>
+            <button type="button" onClick="{{ closeFeedback }}" style="background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 800; padding: 12px 24px; border-radius: 999px; cursor: pointer;">Back to the offers</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ feedbackNotSent }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-bottom: 22px; padding-right: 40px;">
+            <img src="brand/circle-logo.png" alt="Circle" style="height: 46px; width: auto; display: block; margin-bottom: 14px;">
+            <div style="font-size: 11px; font-weight: 800; letter-spacing: .24em; color: #C8102E; margin-bottom: 8px;">FEEDBACK</div>
+            <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em;">Share your feedback</h3>
+            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Tell us how an offer worked for you, or share your thoughts about Circle.</p>
+          </div>
+          <form onSubmit="{{ submitFeedback }}" style="display: flex; flex-direction: column; gap: 14px;">
+            <input type="text" name="_honey" autocomplete="off" aria-hidden="true" style="display: none;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+              <label class="flbl">OFFER<input class="fld" type="text" name="offer" defaultValue="{{ feedbackOffer }}" placeholder="Optional"></label>
+              <label class="flbl">RATING<select class="fld" name="rating" defaultValue=""><option value="">Optional</option><option>5 - Excellent</option><option>4 - Good</option><option>3 - Average</option><option>2 - Poor</option><option>1 - Very poor</option></select></label>
+            </div>
+            <label class="flbl">YOUR FEEDBACK<textarea class="fld" name="message" rows="{{ four }}" required="{{ true }}" placeholder="What went well, and what could be better?" style="resize: vertical;"></textarea></label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+              <label class="flbl">NAME<input class="fld" type="text" name="name" autocomplete="name" placeholder="Optional"></label>
+              <label class="flbl">EMAIL<input class="fld" type="email" name="email" autocomplete="email" placeholder="Optional, for a reply"></label>
+            </div>
+            <sc-if value="{{ feedbackError }}" hint-placeholder-val="{{ false }}">
+              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or <a href="{{ feedbackMailto }}" style="color: #C8102E;">send it to us by email</a> (circle@bist.ge).</p>
+            </sc-if>
+            <button type="submit" class="fbtn" disabled="{{ feedbackSending }}">{{ feedbackButton }}</button>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <footer data-screen-label="Footer" style="background: #0D1B3E; color: #FFFFFF;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 64px 24px 28px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 36px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.12);">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+            <img src="brand/circle-logo-reverse.png" alt="Circle" style="height: 60px; width: auto; display: block;">
+          </div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,.65); max-width: 34ch;">A loyalty programme for the parents of the British International School of Tbilisi.</p>
+        </div>
+        <div>
+          <div style="font-size: 11px; font-weight: 800; letter-spacing: .2em; color: #F2B32C; margin-bottom: 14px;">BIST</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+            <a href="tel:+995322801919" style="color: rgba(255,255,255,.85); text-decoration: none;">+995 322 80 19 19</a>
+            <a href="mailto:circle@bist.ge" style="color: rgba(255,255,255,.85); text-decoration: none;">circle@bist.ge</a>
+            <a href="#feedback" onClick="{{ openFeedback }}" style="color: #F2B32C; text-decoration: none; font-weight: 700;">Share feedback about an offer</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size: 11px; font-weight: 800; letter-spacing: .2em; color: #F2B32C; margin-bottom: 14px;">CAMPUS</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,.85);">Leo Kvachadze 17<br>Lisi Lake Area<br>Tbilisi 0186, Georgia</p>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 22px; font-size: 12px; color: rgba(255,255,255,.5);">
+        <span>© 2026 BIST. All rights reserved.</span>
+        <span style="max-width: 60ch;">Offers are provided by partner businesses and may change or end without notice. Parent cards are personal and non-transferable.</span>
+      </div>
+    </div>
+  </footer>
+  </sc-if>
+
+  <sc-if value="{{ showChecking }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Checking login" style="min-height: 100vh; background: #0D1B3E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;">
+      <img src="brand/circle-logo-reverse.png" alt="Circle" style="height: 64px; width: auto; display: block;">
+      <span role="status" style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,.75);">{{ t.working }}</span>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ authPage }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Sign-in page" class="gate">
+      <div class="gate-brand">
+        <div class="ring gate-ring" aria-hidden="true"><span></span></div>
+        <img src="brand/circle-logo-reverse.png" alt="Circle" class="gate-logo">
+        <div class="gate-copy">
+          <div class="gate-kicker">{{ t.gateKicker }}</div>
+          <h1 class="gate-title">{{ t.gateTitle1 }}<br>{{ t.gateTitle2 }}</h1>
+          <p class="gate-text">{{ t.gateText }}</p>
+        </div>
+        <div class="gate-photo"><img src="photos/bist-campus.webp" alt="The BIST campus in Tbilisi"></div>
+        <div class="gate-contact"><a href="{{ t.contactMailto }}">{{ t.contactEmail }}</a><a href="{{ t.contactTel }}">{{ t.contactPhone }}</a></div>
+      </div>
+      <main class="gate-main">
+        <div class="gate-card">
+          <sc-if value="{{ authTabs }}" hint-placeholder-val="{{ true }}">
+            <div role="tablist" aria-label="Circle" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: #F6F4EE; border: 1px solid #E7E4DB; border-radius: 999px; margin-bottom: 26px;">
+              <button type="button" role="tab" aria-selected="{{ tabLoginOn }}" onClick="{{ toLogin }}" style="{{ tabLoginStyle }}">{{ t.tabLogin }}</button>
+              <button type="button" role="tab" aria-selected="{{ tabJoinOn }}" onClick="{{ toJoin }}" style="{{ tabJoinStyle }}">{{ t.tabJoin }}</button>
+            </div>
+          </sc-if>
+          <div style="margin-bottom: 22px;">
+            <div style="font-size: 11px; font-weight: 800; letter-spacing: .24em; color: #C8102E; margin-bottom: 8px;">{{ authKicker }}</div>
+            <h2 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em; overflow-wrap: anywhere;">{{ authTitle }}</h2>
+            <sc-if value="{{ authHasIntro }}" hint-placeholder-val="{{ true }}"><p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">{{ authIntro }}</p></sc-if>
+          </div>
+          <sc-if value="{{ modeJoin }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ submitJoin }}" style="display: flex; flex-direction: column; gap: 14px;">
+              <div class="flbl" id="circle-member-type">{{ t.memberType }}</div>
+              <div role="group" aria-labelledby="circle-member-type" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: -6px;">
+                <sc-for list="{{ roleChoices }}" as="choice" hint-placeholder-count="3"><button type="button" onClick="{{ choice.pick }}" aria-pressed="{{ choice.on }}" style="{{ choice.style }}">{{ choice.label }}</button></sc-for>
+              </div>
+              <sc-if value="{{ roleChosen }}" hint-placeholder-val="{{ true }}">
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                  <label class="flbl">{{ joinEmailLabel }}<input class="fld" type="email" name="email" autocomplete="email" required="{{ true }}" defaultValue="{{ authEmail }}" placeholder="{{ joinEmailPh }}"></label>
+                  <sc-if value="{{ isEmployee }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 12.5px; line-height: 1.55; color: #5A6478; margin-top: -6px;">{{ t.workEmailHint }}</p></sc-if>
+                  <sc-if value="{{ isFamily }}" hint-placeholder-val="{{ true }}">
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                <sc-for list="{{ kidRows }}" as="kid" hint-placeholder-count="1">
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <div style="display: flex; gap: 8px; align-items: flex-end;">
+                      <label class="flbl" style="flex: 1 1 auto; min-width: 0;">{{ kid.label }}<input class="fld" type="text" name="child" autocomplete="off" required="{{ true }}" value="{{ kid.value }}" onChange="{{ kid.onChange }}" aria-invalid="{{ kid.bad }}" placeholder="{{ t.kidPh }}" style="{{ kid.fieldStyle }}"></label>
+                      <sc-if value="{{ kid.removable }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ kid.remove }}" aria-label="{{ t.remove }}" style="flex: 0 0 auto; width: 46px; height: 46px; border-radius: 12px; border: 1px solid #D8D4C6; background: #FFFFFF; color: #0D1B3E; font-size: 14px; cursor: pointer;">✕</button></sc-if>
+                    </div>
+                    <sc-if value="{{ kid.hasStatus }}" hint-placeholder-val="{{ false }}"><p role="status" style="{{ kid.statusStyle }}">{{ kid.statusText }}</p></sc-if>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ canAddKid }}" hint-placeholder-val="{{ true }}"><div><button type="button" onClick="{{ addKid }}" style="background: none; border: none; padding: 0; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; color: #0D1B3E; text-decoration: underline; cursor: pointer;">{{ t.addKid }}</button></div></sc-if>
+                <p style="margin: 0; font-size: 12.5px; line-height: 1.55; color: #5A6478;">{{ t.kidHint }}</p>
+                    </div>
+                  </sc-if>
+                  <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 600; line-height: 1.5; color: #5A6478;"><input type="checkbox" name="consent" value="yes" required="{{ true }}" style="margin-top: 3px; accent-color: #0D1B3E;"><span>{{ consentText }}</span></label>
+                  <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
+                  <button type="submit" class="fbtn" disabled="{{ authBusy }}">{{ authButton }}</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ roleNotChosen }}" hint-placeholder-val="{{ false }}"><sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if></sc-if>
+            </form>
+          </sc-if>
+
+          <sc-if value="{{ modeJoinSent }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #0D1B3E;">{{ sentText }}</p>
+              <sc-if value="{{ hasSentKids }}" hint-placeholder-val="{{ false }}">
+                <div style="background: #F6F4EE; border: 1px solid #E7E4DB; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;"><sc-for list="{{ sentKids }}" as="kid" hint-placeholder-count="1"><p style="{{ kid.style }}">{{ kid.text }}</p></sc-for></div>
+              </sc-if>
+              <sc-if value="{{ someNotFound }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: #5A6478;">{{ t.notFoundNote }}</p></sc-if>
+              <button type="button" onClick="{{ toLogin }}" class="fbtn">{{ t.backToLogin }}</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ modeFinish }}" hint-placeholder-val="{{ false }}">
+            <form onSubmit="{{ submitFinish }}" style="display: flex; flex-direction: column; gap: 14px;">
+              <div style="background: #F6F4EE; border: 1px solid #E7E4DB; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 13.5px; line-height: 1.5;"><span style="flex: 0 0 auto; color: #5A6478; font-weight: 600;">{{ t.typeLabel }}</span><span style="min-width: 0; color: #0D1B3E; font-weight: 800; text-align: right; overflow-wrap: anywhere;">{{ signupRole }}</span></div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 13.5px; line-height: 1.5;"><span style="flex: 0 0 auto; color: #5A6478; font-weight: 600;">{{ t.emailLabel }}</span><span style="min-width: 0; color: #0D1B3E; font-weight: 800; text-align: right; overflow-wrap: anywhere;">{{ signupEmail }}</span></div>
+                <sc-if value="{{ signupHasKids }}" hint-placeholder-val="{{ false }}"><div style="display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 13.5px; line-height: 1.5;"><span style="flex: 0 0 auto; color: #5A6478; font-weight: 600;">{{ t.childrenLabel }}</span><span style="min-width: 0; color: #0D1B3E; font-weight: 800; text-align: right; overflow-wrap: anywhere;">{{ signupKids }}</span></div></sc-if>
+              </div>
+              <input type="email" name="username" autocomplete="username" value="{{ signupEmail }}" readOnly="{{ true }}" style="display: none;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;">
+                <label class="flbl">{{ t.firstName }}<input class="fld" type="text" name="firstName" autocomplete="given-name" required="{{ true }}" maxlength="60"></label>
+                <label class="flbl">{{ t.lastName }}<input class="fld" type="text" name="lastName" autocomplete="family-name" required="{{ true }}" maxlength="60"></label>
+              </div>
+              <label class="flbl">{{ t.password }}<input class="fld" type="password" name="password" autocomplete="new-password" required="{{ true }}" minlength="8" placeholder="{{ t.newPasswordPh }}"></label>
+              <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
+              <button type="submit" class="fbtn" disabled="{{ authBusy }}">{{ authButton }}</button>
+            </form>
+          </sc-if>
+
+          <sc-if value="{{ modeLinkError }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <p role="alert" style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #0D1B3E;">{{ authError }}</p>
+              <button type="button" onClick="{{ openJoin }}" class="fbtn">{{ t.registerAgain }}</button>
+              <button type="button" onClick="{{ toLogin }}" style="width: 100%; border: 1px solid rgba(13,27,62,.3); border-radius: 999px; padding: 13px 24px; background: transparent; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 15px; font-weight: 800; cursor: pointer;">{{ t.logIn }}</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ modeLogin }}" hint-placeholder-val="{{ false }}">
+            <form onSubmit="{{ submitLogin }}" style="display: flex; flex-direction: column; gap: 14px;">
+              <label class="flbl">{{ t.email }}<input class="fld" type="email" name="email" autocomplete="email" required="{{ true }}" defaultValue="{{ authEmail }}" placeholder="{{ t.emailPh }}"></label>
+              <label class="flbl">{{ t.password }}<input class="fld" type="password" name="password" autocomplete="current-password" required="{{ true }}" placeholder="{{ t.passwordPh }}"></label>
+              <div><button type="button" onClick="{{ toForgot }}" style="background: none; border: none; padding: 0; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; color: #0D1B3E; text-decoration: underline; cursor: pointer;">{{ t.forgotLink }}</button></div>
+              <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
+              <button type="submit" class="fbtn" disabled="{{ authBusy }}">{{ authButton }}</button>
+            </form>
+          </sc-if>
+
+          <sc-if value="{{ modeForgot }}" hint-placeholder-val="{{ false }}">
+            <form onSubmit="{{ submitForgot }}" style="display: flex; flex-direction: column; gap: 14px;">
+              <label class="flbl">{{ t.email }}<input class="fld" type="email" name="email" autocomplete="email" required="{{ true }}" defaultValue="{{ authEmail }}" placeholder="{{ t.emailPh }}"></label>
+              <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
+              <button type="submit" class="fbtn" disabled="{{ authBusy }}">{{ authButton }}</button>
+              <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: #5A6478; text-align: center;"><button type="button" onClick="{{ toLogin }}" style="background: none; border: none; padding: 0; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; color: #0D1B3E; text-decoration: underline; cursor: pointer;">{{ t.backToLogin }}</button></p>
+            </form>
+          </sc-if>
+
+          <sc-if value="{{ modeForgotSent }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #0D1B3E;">{{ forgotSentText }}</p>
+              <button type="button" onClick="{{ toLogin }}" class="fbtn">{{ t.backToLogin }}</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ modeReset }}" hint-placeholder-val="{{ false }}">
+            <form onSubmit="{{ submitReset }}" style="display: flex; flex-direction: column; gap: 14px;">
+              <label class="flbl">{{ t.newPassword }}<input class="fld" type="password" name="password" autocomplete="new-password" required="{{ true }}" minlength="8" placeholder="{{ t.newPasswordPh }}"></label>
+              <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
+              <button type="submit" class="fbtn" disabled="{{ authBusy }}">{{ authButton }}</button>
+            </form>
+          </sc-if>
+
+          <sc-if value="{{ modeWorking }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: #5A6478;">{{ t.working }}</p>
+              <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
+            </div>
+          </sc-if>
+          <p style="margin: 24px 0 0; padding-top: 18px; border-top: 1px dashed #E3E0D6; text-align: center; font-size: 13px; line-height: 1.6; color: #5A6478;">{{ t.partnerQuestion }} <button type="button" onClick="{{ openPartner }}" style="background: none; border: none; padding: 0; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; color: #0D1B3E; text-decoration: underline; cursor: pointer;">{{ t.partnerLink }}</button></p>
+        </div>
+      </main>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ authOverlay }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="Account popup" onClick="{{ closeAuth }}" style="position: fixed; inset: 0; z-index: 100; background: rgba(13,27,62,.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px;">
       <div role="dialog" aria-modal="true" aria-label="{{ authTitle }}" onClick="{{ stopClick }}" style="background: #FFFFFF; border-radius: 24px; width: min(540px, 100%); max-height: 90vh; overflow-y: auto; overscroll-behavior: contain; padding: 32px; box-sizing: border-box; position: relative; box-shadow: 0 30px 80px rgba(13,27,62,.35);">
         <button type="button" onClick="{{ closeAuth }}" aria-label="{{ t.close }}" style="position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #E7E4DB; background: #FFFFFF; color: #0D1B3E; font-size: 15px; cursor: pointer;">✕</button>
@@ -389,70 +647,6 @@
           <sc-if value="{{ authHasIntro }}" hint-placeholder-val="{{ true }}"><p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">{{ authIntro }}</p></sc-if>
         </div>
 
-        <sc-if value="{{ modeJoin }}" hint-placeholder-val="{{ true }}">
-          <form onSubmit="{{ submitJoin }}" style="display: flex; flex-direction: column; gap: 14px;">
-            <div class="flbl" id="circle-member-type">{{ t.memberType }}</div>
-            <div role="group" aria-labelledby="circle-member-type" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: -6px;">
-              <sc-for list="{{ roleChoices }}" as="choice" hint-placeholder-count="3"><button type="button" onClick="{{ choice.pick }}" aria-pressed="{{ choice.on }}" style="{{ choice.style }}">{{ choice.label }}</button></sc-for>
-            </div>
-            <sc-if value="{{ roleChosen }}" hint-placeholder-val="{{ true }}">
-              <div style="display: flex; flex-direction: column; gap: 14px;">
-                <label class="flbl">{{ joinEmailLabel }}<input class="fld" type="email" name="email" autocomplete="email" required="{{ true }}" defaultValue="{{ authEmail }}" placeholder="{{ joinEmailPh }}"></label>
-                <sc-if value="{{ isEmployee }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 12.5px; line-height: 1.55; color: #5A6478; margin-top: -6px;">{{ t.workEmailHint }}</p></sc-if>
-                <sc-if value="{{ isFamily }}" hint-placeholder-val="{{ true }}">
-                  <div style="display: flex; flex-direction: column; gap: 14px;">
-              <sc-for list="{{ kidRows }}" as="kid" hint-placeholder-count="1">
-                <div style="display: flex; flex-direction: column; gap: 6px;">
-                  <div style="display: flex; gap: 8px; align-items: flex-end;">
-                    <label class="flbl" style="flex: 1 1 auto; min-width: 0;">{{ kid.label }}<input class="fld" type="text" name="child" autocomplete="off" required="{{ true }}" value="{{ kid.value }}" onChange="{{ kid.onChange }}" aria-invalid="{{ kid.bad }}" placeholder="{{ t.kidPh }}" style="{{ kid.fieldStyle }}"></label>
-                    <sc-if value="{{ kid.removable }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ kid.remove }}" aria-label="{{ t.remove }}" style="flex: 0 0 auto; width: 46px; height: 46px; border-radius: 12px; border: 1px solid #D8D4C6; background: #FFFFFF; color: #0D1B3E; font-size: 14px; cursor: pointer;">✕</button></sc-if>
-                  </div>
-                  <sc-if value="{{ kid.hasStatus }}" hint-placeholder-val="{{ false }}"><p role="status" style="{{ kid.statusStyle }}">{{ kid.statusText }}</p></sc-if>
-                </div>
-              </sc-for>
-              <sc-if value="{{ canAddKid }}" hint-placeholder-val="{{ true }}"><div><button type="button" onClick="{{ addKid }}" style="background: none; border: none; padding: 0; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; color: #0D1B3E; text-decoration: underline; cursor: pointer;">{{ t.addKid }}</button></div></sc-if>
-              <p style="margin: 0; font-size: 12.5px; line-height: 1.55; color: #5A6478;">{{ t.kidHint }}</p>
-                  </div>
-                </sc-if>
-                <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 600; line-height: 1.5; color: #5A6478;"><input type="checkbox" name="consent" value="yes" required="{{ true }}" style="margin-top: 3px; accent-color: #0D1B3E;"><span>{{ consentText }}</span></label>
-                <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
-                <button type="submit" class="fbtn" disabled="{{ authBusy }}">{{ authButton }}</button>
-              </div>
-            </sc-if>
-            <sc-if value="{{ roleNotChosen }}" hint-placeholder-val="{{ false }}"><sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if></sc-if>
-            <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: #5A6478; text-align: center;">{{ t.haveAccount }} <button type="button" onClick="{{ toLogin }}" style="background: none; border: none; padding: 0; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; color: #0D1B3E; text-decoration: underline; cursor: pointer;">{{ t.logIn }}</button></p>
-          </form>
-        </sc-if>
-
-        <sc-if value="{{ modeJoinSent }}" hint-placeholder-val="{{ false }}">
-          <div style="display: flex; flex-direction: column; gap: 14px;">
-            <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #0D1B3E;">{{ sentText }}</p>
-            <sc-if value="{{ hasSentKids }}" hint-placeholder-val="{{ false }}">
-              <div style="background: #F6F4EE; border: 1px solid #E7E4DB; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;"><sc-for list="{{ sentKids }}" as="kid" hint-placeholder-count="1"><p style="{{ kid.style }}">{{ kid.text }}</p></sc-for></div>
-            </sc-if>
-            <sc-if value="{{ someNotFound }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: #5A6478;">{{ t.notFoundNote }}</p></sc-if>
-            <button type="button" onClick="{{ closeAuth }}" class="fbtn">{{ t.backToOffers }}</button>
-          </div>
-        </sc-if>
-
-        <sc-if value="{{ modeFinish }}" hint-placeholder-val="{{ false }}">
-          <form onSubmit="{{ submitFinish }}" style="display: flex; flex-direction: column; gap: 14px;">
-            <div style="background: #F6F4EE; border: 1px solid #E7E4DB; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 13.5px; line-height: 1.5;"><span style="flex: 0 0 auto; color: #5A6478; font-weight: 600;">{{ t.typeLabel }}</span><span style="min-width: 0; color: #0D1B3E; font-weight: 800; text-align: right; overflow-wrap: anywhere;">{{ signupRole }}</span></div>
-              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 13.5px; line-height: 1.5;"><span style="flex: 0 0 auto; color: #5A6478; font-weight: 600;">{{ t.emailLabel }}</span><span style="min-width: 0; color: #0D1B3E; font-weight: 800; text-align: right; overflow-wrap: anywhere;">{{ signupEmail }}</span></div>
-              <sc-if value="{{ signupHasKids }}" hint-placeholder-val="{{ false }}"><div style="display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 13.5px; line-height: 1.5;"><span style="flex: 0 0 auto; color: #5A6478; font-weight: 600;">{{ t.childrenLabel }}</span><span style="min-width: 0; color: #0D1B3E; font-weight: 800; text-align: right; overflow-wrap: anywhere;">{{ signupKids }}</span></div></sc-if>
-            </div>
-            <input type="email" name="username" autocomplete="username" value="{{ signupEmail }}" readOnly="{{ true }}" style="display: none;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;">
-              <label class="flbl">{{ t.firstName }}<input class="fld" type="text" name="firstName" autocomplete="given-name" required="{{ true }}" maxlength="60"></label>
-              <label class="flbl">{{ t.lastName }}<input class="fld" type="text" name="lastName" autocomplete="family-name" required="{{ true }}" maxlength="60"></label>
-            </div>
-            <label class="flbl">{{ t.password }}<input class="fld" type="password" name="password" autocomplete="new-password" required="{{ true }}" minlength="8" placeholder="{{ t.newPasswordPh }}"></label>
-            <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
-            <button type="submit" class="fbtn" disabled="{{ authBusy }}">{{ authButton }}</button>
-          </form>
-        </sc-if>
-
         <sc-if value="{{ modeDone }}" hint-placeholder-val="{{ false }}">
           <div style="display: flex; flex-direction: column; gap: 14px;">
             <div style="width: 62px; height: 62px; border-radius: 50%; background: #F2B32C; color: #0D1B3E; font-size: 26px; font-weight: 800; display: flex; align-items: center; justify-content: center;">✓</div>
@@ -460,49 +654,6 @@
             <button type="button" onClick="{{ seeOffers }}" class="fbtn">{{ t.seeOffers }}</button>
             <button type="button" onClick="{{ openAccount }}" style="width: 100%; border: 1px solid rgba(13,27,62,.3); border-radius: 999px; padding: 13px 24px; background: transparent; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 15px; font-weight: 800; cursor: pointer;">{{ t.myAccount }}</button>
           </div>
-        </sc-if>
-
-        <sc-if value="{{ modeLinkError }}" hint-placeholder-val="{{ false }}">
-          <div style="display: flex; flex-direction: column; gap: 14px;">
-            <p role="alert" style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #0D1B3E;">{{ authError }}</p>
-            <button type="button" onClick="{{ openJoin }}" class="fbtn">{{ t.registerAgain }}</button>
-            <button type="button" onClick="{{ toLogin }}" style="width: 100%; border: 1px solid rgba(13,27,62,.3); border-radius: 999px; padding: 13px 24px; background: transparent; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 15px; font-weight: 800; cursor: pointer;">{{ t.logIn }}</button>
-          </div>
-        </sc-if>
-
-        <sc-if value="{{ modeLogin }}" hint-placeholder-val="{{ false }}">
-          <form onSubmit="{{ submitLogin }}" style="display: flex; flex-direction: column; gap: 14px;">
-            <label class="flbl">{{ t.email }}<input class="fld" type="email" name="email" autocomplete="email" required="{{ true }}" defaultValue="{{ authEmail }}" placeholder="{{ t.emailPh }}"></label>
-            <label class="flbl">{{ t.password }}<input class="fld" type="password" name="password" autocomplete="current-password" required="{{ true }}" placeholder="{{ t.passwordPh }}"></label>
-            <div><button type="button" onClick="{{ toForgot }}" style="background: none; border: none; padding: 0; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; color: #0D1B3E; text-decoration: underline; cursor: pointer;">{{ t.forgotLink }}</button></div>
-            <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
-            <button type="submit" class="fbtn" disabled="{{ authBusy }}">{{ authButton }}</button>
-            <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: #5A6478; text-align: center;">{{ t.newHere }} <button type="button" onClick="{{ openJoin }}" style="background: none; border: none; padding: 0; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; color: #0D1B3E; text-decoration: underline; cursor: pointer;">{{ t.becomeMember }}</button></p>
-          </form>
-        </sc-if>
-
-        <sc-if value="{{ modeForgot }}" hint-placeholder-val="{{ false }}">
-          <form onSubmit="{{ submitForgot }}" style="display: flex; flex-direction: column; gap: 14px;">
-            <label class="flbl">{{ t.email }}<input class="fld" type="email" name="email" autocomplete="email" required="{{ true }}" defaultValue="{{ authEmail }}" placeholder="{{ t.emailPh }}"></label>
-            <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
-            <button type="submit" class="fbtn" disabled="{{ authBusy }}">{{ authButton }}</button>
-            <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: #5A6478; text-align: center;"><button type="button" onClick="{{ toLogin }}" style="background: none; border: none; padding: 0; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 800; color: #0D1B3E; text-decoration: underline; cursor: pointer;">{{ t.backToLogin }}</button></p>
-          </form>
-        </sc-if>
-
-        <sc-if value="{{ modeForgotSent }}" hint-placeholder-val="{{ false }}">
-          <div style="display: flex; flex-direction: column; gap: 14px;">
-            <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #0D1B3E;">{{ forgotSentText }}</p>
-            <button type="button" onClick="{{ toLogin }}" class="fbtn">{{ t.backToLogin }}</button>
-          </div>
-        </sc-if>
-
-        <sc-if value="{{ modeReset }}" hint-placeholder-val="{{ false }}">
-          <form onSubmit="{{ submitReset }}" style="display: flex; flex-direction: column; gap: 14px;">
-            <label class="flbl">{{ t.newPassword }}<input class="fld" type="password" name="password" autocomplete="new-password" required="{{ true }}" minlength="8" placeholder="{{ t.newPasswordPh }}"></label>
-            <sc-if value="{{ authHasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">{{ authError }}</p></sc-if>
-            <button type="submit" class="fbtn" disabled="{{ authBusy }}">{{ authButton }}</button>
-          </form>
         </sc-if>
 
         <sc-if value="{{ modeAccount }}" hint-placeholder-val="{{ false }}">
@@ -596,75 +747,6 @@
     </div>
   </sc-if>
 
-  <sc-if value="{{ feedbackOpen }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="Feedback form popup" onClick="{{ closeFeedback }}" style="position: fixed; inset: 0; z-index: 100; background: rgba(13,27,62,.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px;">
-      <div onClick="{{ stopClick }}" style="background: #FFFFFF; border-radius: 24px; width: min(540px, 100%); max-height: 90vh; overflow-y: auto; overscroll-behavior: contain; padding: 32px; box-sizing: border-box; position: relative; box-shadow: 0 30px 80px rgba(13,27,62,.35);">
-        <button type="button" onClick="{{ closeFeedback }}" aria-label="Close" style="position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #E7E4DB; background: #FFFFFF; color: #0D1B3E; font-size: 15px; cursor: pointer;">✕</button>
-        <sc-if value="{{ feedbackSent }}" hint-placeholder-val="{{ false }}">
-          <div style="text-align: center; padding: 30px 8px 10px;">
-            <div style="width: 62px; height: 62px; border-radius: 50%; background: #F2B32C; color: #0D1B3E; font-size: 26px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">✓</div>
-            <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 10px;">Thank you!</h3>
-            <p style="margin: 0 auto 24px; font-size: 14.5px; line-height: 1.6; color: #5A6478; max-width: 40ch;">Your feedback has been received. It helps us make Circle better.</p>
-            <button type="button" onClick="{{ closeFeedback }}" style="background: #0D1B3E; border: none; color: #FFFFFF; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 800; padding: 12px 24px; border-radius: 999px; cursor: pointer;">Back to the offers</button>
-          </div>
-        </sc-if>
-        <sc-if value="{{ feedbackNotSent }}" hint-placeholder-val="{{ true }}">
-          <div style="margin-bottom: 22px; padding-right: 40px;">
-            <img src="brand/circle-logo.png" alt="Circle" style="height: 46px; width: auto; display: block; margin-bottom: 14px;">
-            <div style="font-size: 11px; font-weight: 800; letter-spacing: .24em; color: #C8102E; margin-bottom: 8px;">FEEDBACK</div>
-            <h3 style="font-family: Sora, sans-serif; font-weight: 800; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em;">Share your feedback</h3>
-            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6478;">Tell us how an offer worked for you, or share your thoughts about Circle.</p>
-          </div>
-          <form onSubmit="{{ submitFeedback }}" style="display: flex; flex-direction: column; gap: 14px;">
-            <input type="text" name="_honey" autocomplete="off" aria-hidden="true" style="display: none;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
-              <label class="flbl">OFFER<input class="fld" type="text" name="offer" defaultValue="{{ feedbackOffer }}" placeholder="Optional"></label>
-              <label class="flbl">RATING<select class="fld" name="rating" defaultValue=""><option value="">Optional</option><option>5 - Excellent</option><option>4 - Good</option><option>3 - Average</option><option>2 - Poor</option><option>1 - Very poor</option></select></label>
-            </div>
-            <label class="flbl">YOUR FEEDBACK<textarea class="fld" name="message" rows="{{ four }}" required="{{ true }}" placeholder="What went well, and what could be better?" style="resize: vertical;"></textarea></label>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
-              <label class="flbl">NAME<input class="fld" type="text" name="name" autocomplete="name" placeholder="Optional"></label>
-              <label class="flbl">EMAIL<input class="fld" type="email" name="email" autocomplete="email" placeholder="Optional, for a reply"></label>
-            </div>
-            <sc-if value="{{ feedbackError }}" hint-placeholder-val="{{ false }}">
-              <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #C8102E; font-weight: 700;">We could not send this just now. Please try again, or <a href="{{ feedbackMailto }}" style="color: #C8102E;">send it to us by email</a> (circle@bist.ge).</p>
-            </sc-if>
-            <button type="submit" class="fbtn" disabled="{{ feedbackSending }}">{{ feedbackButton }}</button>
-          </form>
-        </sc-if>
-      </div>
-    </div>
-  </sc-if>
-
-  <footer data-screen-label="Footer" style="background: #0D1B3E; color: #FFFFFF;">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 64px 24px 28px;">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 36px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.12);">
-        <div>
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-            <img src="brand/circle-logo-reverse.png" alt="Circle" style="height: 60px; width: auto; display: block;">
-          </div>
-          <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,.65); max-width: 34ch;">A loyalty programme for the parents of the British International School of Tbilisi.</p>
-        </div>
-        <div>
-          <div style="font-size: 11px; font-weight: 800; letter-spacing: .2em; color: #F2B32C; margin-bottom: 14px;">BIST</div>
-          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
-            <a href="tel:+995322801919" style="color: rgba(255,255,255,.85); text-decoration: none;">+995 322 80 19 19</a>
-            <a href="mailto:circle@bist.ge" style="color: rgba(255,255,255,.85); text-decoration: none;">circle@bist.ge</a>
-            <a href="#feedback" onClick="{{ openFeedback }}" style="color: #F2B32C; text-decoration: none; font-weight: 700;">Share feedback about an offer</a>
-          </div>
-        </div>
-        <div>
-          <div style="font-size: 11px; font-weight: 800; letter-spacing: .2em; color: #F2B32C; margin-bottom: 14px;">CAMPUS</div>
-          <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,.85);">Leo Kvachadze 17<br>Lisi Lake Area<br>Tbilisi 0186, Georgia</p>
-        </div>
-      </div>
-      <div style="display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 22px; font-size: 12px; color: rgba(255,255,255,.5);">
-        <span>© 2026 BIST. All rights reserved.</span>
-        <span style="max-width: 60ch;">Offers are provided by partner businesses and may change or end without notice. Parent cards are personal and non-transferable.</span>
-      </div>
-    </div>
-  </footer>
-
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{
@@ -675,396 +757,28 @@
 class Component extends DCLogic {
   // The saved login of a Circle member (see "Circle accounts" below).
   token = this.readToken();
-  state = { signedIn: !!this.token, account: null, authOpen: false, authMode: "join", authBusy: false, authError: "", authEmail: "", role: "", kids: [""], kidStatus: [], signup: null, registerToken: "", resetToken: "", doneKind: "registered", addKids: [""], addStatus: [], slide: 0, cat: "All", q: "", paused: false, menuOpen: false, detailIdx: null, partnerOpen: false, partnerForm: "idle", feedbackOpen: false, feedbackForm: "idle", feedbackOffer: "" };
+  state = { signedIn: !!this.token, checking: !!this.token, offers: null, offersState: "loading", account: null, authOpen: false, authMode: this.firstMode(), authBusy: false, authError: "", authEmail: "", role: "", kids: [""], kidStatus: [], signup: null, registerToken: "", resetToken: "", doneKind: "registered", addKids: [""], addStatus: [], slide: 0, cat: "All", q: "", paused: false, menuOpen: false, detailIdx: null, partnerOpen: false, partnerForm: "idle", feedbackOpen: false, feedbackForm: "idle", feedbackOffer: "" };
 
   CATS = ["Wellness & Sport", "Travel & Leisure", "Healthcare", "Entertainment", "Gastronomy", "Beauty & Personal Care", "Shopping", "Automotive", "Expat Services", "Other"];
 
-  OFFERS = [
-    {
-      cats: ["Wellness & Sport"],
-      partner: "Technogym",
-      badge: "−10%",
-      logo: "logos/technogym.png",
-      desc: "Technogym is an Italian wellness brand founded in 1983 and recognised worldwide for its design-led training equipment and digital coaching ecosystem. Its machines are found in leading gyms, hotels, sports clubs and private homes across more than 100 countries, and the company has served as Official Supplier to multiple Olympic Games. Every product – from strength and cardio lines to compact home equipment and the Technogym App – combines Italian design with training science, so members can build a serious workout setup that still looks good in the room it lives in.",
-      benefit: "10% discount on retail purchases",
-      activation: "Show your parent card at the Technogym store (37/39 Kostava Street, Grato Passage) before paying. Retail purchases only, paid by bank card in the same name as on your card.",
-      validity: "Valid until 29 October 2027",
-      links: [{ kind: "web", url: "https://www.technogym.com/" }],
-      conditions: ["Retail purchases in store only", "Card payment only"]
-    },
-    {
-      cats: ["Wellness & Sport"],
-      partner: "Oktopus Fitness Club",
-      badge: "−30 GEL",
-      logo: "logos/oktopus.png",
-      desc: "Oktopus Fitness Club is a Georgian fitness club network with clubs in Tbilisi and Batumi. Alongside the gym floor, members can join group classes and pilates, book personal training and use the clubs' spa services, and the Oktopus shop sells training gear and supplements.",
-      benefit: "Membership at special Circle prices: 30 GEL off at every club",
-      activation: "Visit the club reception (Batumi, Sandro Euli / Vake or City Mall / Mziuri), show your parent card and buy your membership at the Circle price. In-person purchases only.",
-      validity: "Valid from 28 October 2026 to 11 October 2027",
-      links: [{ kind: "web", url: "https://oktopus.ge/" }, { kind: "facebook", url: "https://www.facebook.com/Oktopusfitness/" }, { kind: "instagram", url: "https://www.instagram.com/oktopusfitness/" }],
-      conditions: ["Batumi: 175 GEL instead of 195 GEL", "Sandro Euli / Vake: 205 GEL instead of 235 GEL", "City Mall / Mziuri: 305 GEL instead of 335 GEL", "Valid only at the clubs listed, at the price set for each club; retail, in-person purchases only", "If your school enrolment status ends, a new membership is not issued at the Circle price"]
-    },
-    {
-      cats: ["Wellness & Sport"],
-      partner: "Paragraph Golf & Spa Tabori",
-      badge: "−20%",
-      logo: "logos/paragraph-tabori.png",
-      desc: "Paragraph Golf & Spa Tabori, Autograph Collection, sits high on Tabori Hill above Tbilisi, about ten minutes from Freedom Square, with the city skyline and the mountains as its backdrop. Its 9-hole golf course is the first of its kind in the capital, with a golf academy for beginners and juniors, and the hotel also has Paragraph Spa, a 220 m² gym, an indoor pool and a whirlpool. Lessons with the club's coaches help new players earn the Green Card that opens the course to them.",
-      benefit: "Circle lesson packages and 20% off green fees",
-      activation: "Advance booking is required to use the offer: book your lessons or tee time with the golf club on +995 591 16 13 03 or golf.reservations@paragraphhotels.com and say you are a Circle (BIST) member. Show your student or parent card (a copy or photo is accepted) and an ID at reception on arrival, and pay by bank card in the same name.",
-      validity: "Valid until 31 August 2027",
-      links: [{ kind: "web", url: "https://www.marriott.com/en-us/hotels/tbsap-paragraph-golf-and-spa-tabori-autograph-collection/overview/" }, { kind: "instagram", url: "https://www.instagram.com/paragraphtabori_/" }],
-      conditions: ["Advance booking is required for all lessons and tee times", "Junior package (under 15): 6 golf lessons for 1,125 GEL, designed to help young players obtain their Green Card quickly and gain access to the course", "Standard package for parents: 6 lessons for 1,250 GEL (buy 5, get 1 free)", "20% off the club's rack-rate green fees for members who play golf or hold a licence (Green Card) to access the course", "Bookings are subject to availability; card payment in the same name as on your parent card"]
-    },
-    {
-      cats: ["Wellness & Sport", "Healthcare"],
-      partner: "Tbilisi Balneological Spa Resort",
-      badge: "−10%",
-      logo: "logos/tbilisi-balneological-resort.png",
-      desc: "Tbilisi Balneological Spa Resort in Abanotubani has offered treatments on Tbilisi's natural thermal waters since 1938, in a building listed as a cultural heritage monument in 1998. Alongside balneological procedures it offers spa and wellness treatments, massages, rehabilitation and physiotherapy, cosmetology and group exercise including aqua aerobics.",
-      benefit: "Family Wellness & Care: 10% off spa and wellness treatments and 10% off children's swimming lessons",
-      activation: "Show your parent card at the resort reception (9 Vakhtang Gorgasali Street, open daily 10:00 to 21:00) before you pay for the treatment or the swimming subscription. Bookings: 032 2 43 90 90 or info@balneo.ge.",
-      validity: "Valid until 31 December 2026",
-      links: [{ kind: "web", url: "https://balneo.ge/en/" }, { kind: "facebook", url: "https://www.facebook.com/balneo.ge/" }, { kind: "instagram", url: "https://www.instagram.com/balneological.spa.resort/" }],
-      conditions: ["10% one-time discount for parents on all main spa and wellness treatments", "10% one-time discount on a children's swimming-lessons subscription at the resort pool"]
-    },
-    {
-      cats: ["Travel & Leisure", "Expat Services"],
-      partner: "Premium Georgia",
-      badge: "−15%",
-      logo: "logos/premium-georgia.png",
-      desc: "Premium Georgia is a boutique travel, concierge and lifestyle company offering bespoke experiences and personalised support in Georgia. Its services include private journeys, VIP transfers, exclusive experiences and private event planning, as well as assistance with relocation, banking and legal services. Members of the BIST community also receive priority consultations, priority booking during high season and complimentary travel and concierge consultations, including on relocation to Georgia.",
-      benefit: "15% off all Premium Georgia services",
-      activation: "Quote the promo code BGABIST15 when you book (+995 551 055 550, info@premiumgeorgia.com) and show your parent card or an ID in your name. Pay by bank card in the same name as on your parent card.",
-      validity: "Valid until 30 September 2027",
-      links: [{ kind: "web", url: "https://premiumgeorgia.com/" }, { kind: "facebook", url: "https://www.facebook.com/profile.php?id=61573476876513" }, { kind: "instagram", url: "https://www.instagram.com/premiumgeorgia/" }],
-      conditions: ["15% applies to all Premium Georgia services", "Includes priority consultations and priority booking in high season", "Complimentary travel, lifestyle and relocation consultations"]
-    },
-    {
-      cats: ["Travel & Leisure"],
-      partner: "Kabadoni Boutique Hotel",
-      badge: "−30%",
-      logo: "logos/kabadoni.png",
-      desc: "Kabadoni Boutique Hotel sits in the historic centre of Sighnaghi, with one side looking over the Alazani Valley vineyards and the Caucasus and the other facing the old town. Its 21 rooms blend art nouveau, old Georgian and eastern motifs, and the hotel has a restaurant with an outdoor terrace, a wine bar, an indoor pool, a gym and a spa. Kabadoni is a member of Preferred Hotels & Resorts (Lifestyle Collection).",
-      benefit: "30% off accommodation",
-      activation: "Book directly with the hotel reception on +995 322 24 04 00 or info@kabadoni.ge and say you are a Circle (BIST) member. Show your parent card and an ID in your name at check-in and pay by bank card in the same name.",
-      validity: "Valid for stays from 1 November 2026 to 31 March 2027",
-      links: [{ kind: "web", url: "https://kabadoni.ge/" }, { kind: "facebook", url: "https://www.facebook.com/hotelkabadoni/" }, { kind: "instagram", url: "https://www.instagram.com/hotelkabadoni/" }],
-      conditions: ["Bookings are subject to availability and prior confirmation by the hotel", "The discount applies to the hotel's standard published rates; retail bookings only"]
-    },
-    {
-      cats: ["Travel & Leisure"],
-      partner: "Samzeo Kvareli",
-      badge: "−30%",
-      logo: "logos/samzeo-kvareli.png",
-      desc: "Samzeo Kvareli is an ethno-boutique hotel in the Kindzmarauli micro-zone of the Alazani Valley, with the Caucasus to the north and vineyards to the south. Set on 52,000 square metres with a century-old forest, it has 64 rooms in eight categories across three buildings, an outdoor pool, a sauna, a padel court and a children's play area. The restaurant pairs traditional Kakhetian cuisine with modern accents and hosts wine tastings.",
-      benefit: "30% off accommodation",
-      activation: "Book directly with the hotel reception on +995 577 94 04 93 or infokvareli@samzeo.ge and say you are a Circle (BIST) member. Show your parent card and an ID in your name at check-in and pay by bank card in the same name.",
-      validity: "Valid for stays from 1 November 2026 to 31 March 2027",
-      links: [{ kind: "web", url: "https://samzeo.ge/en/kvareli/home" }, { kind: "facebook", url: "https://www.facebook.com/hotelsamzeo" }, { kind: "instagram", url: "https://www.instagram.com/samzeohotels/" }],
-      conditions: ["Bookings are subject to availability and prior confirmation by the hotel", "The discount applies to the hotel's standard published rates; retail bookings only"]
-    },
-    {
-      cats: ["Travel & Leisure"],
-      partner: "Le Port Batumi",
-      badge: "−30%",
-      logo: "logos/le-port.png",
-      desc: "Le Port is a hotel at 30 Gogebashvili Street in Batumi, about 200 metres from the beach and close to the port, the Boulevard and the Argo cable car. Its 45 rooms and apartments range from standard rooms to studios, family rooms, suites and a penthouse, many with a kitchen or kitchenette, and the hotel offers breakfast, a restaurant and bar, free private parking and a meeting room for up to 150 guests.",
-      benefit: "30% off accommodation",
-      activation: "Book directly with the hotel reception on +995 577 22 77 31 or info@leport.ge and say you are a Circle (BIST) member. Show your parent card and an ID in your name at check-in and pay by bank card in the same name.",
-      validity: "Valid for stays from 1 November 2026 to 31 March 2027",
-      links: [{ kind: "web", url: "https://leport.ge/" }, { kind: "facebook", url: "https://www.facebook.com/leportbatumi/" }, { kind: "instagram", url: "https://www.instagram.com/leport_batumi/" }],
-      conditions: ["Bookings are subject to availability and prior confirmation by the hotel", "The discount applies to the hotel's standard published rates; retail bookings only"]
-    },
-    {
-      cats: ["Travel & Leisure"],
-      partner: "Bodbe Hotel",
-      badge: "−25%",
-      logo: "logos/bodbe-hotel.png",
-      desc: "Bodbe Hotel is a contemporary hotel in Kakheti, on the edge of Sighnaghi and close to the Bodbe Monastery, where the balconies of the rooms and the presidential penthouse look out over the Alazani Valley and the Caucasus Mountains. Aura Restaurant and the wine bar serve Georgian and international dishes and wines, the rooftop terrace opens up a 360-degree view over the town and the valley, and a spa and wellness area completes the stay.",
-      benefit: "25% off Standard rooms and Junior Suites, with breakfast",
-      activation: "Book directly with the hotel on +995 32 222 22 42 or info@bodbehotel.ge and say you are a Circle (BIST) member. Show your parent card and an ID in your name at check-in and pay by bank card in the same name.",
-      validity: "Valid until 29 December 2026",
-      links: [{ kind: "web", url: "https://bodbehotel.ge/" }, { kind: "facebook", url: "https://www.facebook.com/bodbehotel" }, { kind: "instagram", url: "https://www.instagram.com/bodbehotel/" }],
-      conditions: ["Applies to Standard rooms and Junior Suites: 25% off the published single or double occupancy rate with breakfast, as it stands on the day you book", "Extra bed: 76.7 GEL; extra bed with breakfast: 118 GEL for a child, 141.6 GEL for an adult", "Breakfast for an extra guest: 41.3 GEL for a child aged 6-12, 64.9 GEL for an adult", "All prices include 18% VAT", "The number of adults and children per room depends on the room category; the reservation team will suggest the best option for your family", "Subject to availability; free cancellation up to 24 hours before arrival, while a no-show or late cancellation is charged one night"]
-    },
-    {
-      cats: ["Healthcare"],
-      partner: "Caucasus Medical Centre",
-      badge: "−10–15%",
-      logo: "logos/cmc.png",
-      desc: "Caucasus Medical Centre holds international JCI accreditation and offers exclusive terms to the BIST community: 15% off outpatient services and 10% off standard and individual Check-Up packages. The special terms apply at the centre at 23 P. Kavtaradze Street, Tbilisi. For more information, call 0322 600 600.",
-      benefit: "15% off outpatient services, 10% off Check-Up packages",
-      activation: "Show your parent card at reception when you receive the service at 23 P. Kavtaradze Street; the discount is applied on the spot. Information: 032 2 600 600.",
-      validity: "Valid until 18 February 2027",
-      links: [{ kind: "web", url: "https://cmchospital.ge/en" }, { kind: "facebook", url: "https://www.facebook.com/CaucasusMedicalCentre/" }, { kind: "instagram", url: "https://www.instagram.com/cmchospital" }],
-      conditions: ["15% off outpatient services and 10% off standard and individual Check-Up packages", "Not valid on services that are already discounted"]
-    },
-    {
-      cats: ["Healthcare", "Wellness & Sport"],
-      partner: "Caraps Medline",
-      badge: "−20%",
-      logo: "logos/caraps-medline.png",
-      desc: "Caraps Medline is the first clinic in Georgia accredited by AACI (American Accreditation Commission International), meaning its quality standards fully meet leading American protocols. The clinic works only with FDA-approved equipment and products, and its services are built on modern technology, professional care and an individual approach. The offer covers device-based, injectable and dermatological procedures, skin diagnostics and laser hair removal.",
-      benefit: "20% off all clinic services",
-      activation: "Show your parent card at the clinic before the procedure and pay by bank card in the same name as on your card.",
-      validity: "Valid until 24 February 2027",
-      links: [{ kind: "web", url: "https://carapsmedline.ge/" }, { kind: "facebook", url: "https://www.facebook.com/carapsmedlineclinic/" }, { kind: "instagram", url: "https://www.instagram.com/carapsmedline/" }],
-      conditions: ["Includes injectable and device-based treatments, laser hair removal, dermatologist consultations, skin diagnostics and the acne treatment programme", "Not valid on services that are already discounted; discounts are not cumulative"]
-    },
-    {
-      cats: ["Healthcare"],
-      partner: "MediClubGeorgia",
-      badge: "Priority access",
-      logo: "logos/mediclubgeorgia.png",
-      desc: "MediClubGeorgia offers students and their families high-quality, tailored and prevention-focused healthcare. Its membership programme is designed to support the health of every family, simplify access to medical care and raise health awareness, built on the belief that caring for health doesn't begin only when a medical need arises but is shaped through prevention, education and continuous support.",
-      benefit: "Preferential access and a 24/7 Healthcare Service Manager",
-      activation: "Contact MediClubGeorgia on +995 32 225 1991 or mcg@mcg.ge, say you are a Circle (BIST) family and show your parent card at your first visit. Your dedicated Healthcare Service Manager then arranges appointments for you.",
-      validity: "Valid until October 2027",
-      links: [{ kind: "web", url: "https://www.mcg.ge/en" }, { kind: "facebook", url: "https://www.facebook.com/MediClubGeorgia/" }, { kind: "instagram", url: "https://www.instagram.com/mediclubgeorgia/" }],
-      conditions: ["Includes preferential access to MediClubGeorgia medical services, 24/7 support from a dedicated Healthcare Service Manager and tailored preventive health screenings for children and parents"]
-    },
-    {
-      cats: ["Entertainment"],
-      partner: "Museum of Illusions",
-      badge: "Up to −46%",
-      logo: "logos/museum-of-illusions.png",
-      desc: "The Museum of Illusions at 10 Betlemi Street is full of visual illusions, interactive exhibits and brain teasers. It shares the museum space with the Holoseum and the Planetarium, so you can combine your visit with one or both of them at a reduced price.",
-      benefit: "Adult tickets 25 GEL instead of 40 GEL",
-      activation: "Show your parent card at the ticket desk at 10 Betlemi Street and pay by bank card in the same name as on your card.",
-      validity: "Valid until 16 March 2027",
-      links: [{ kind: "web", url: "https://museumofillusions.ge/en/" }, { kind: "facebook", url: "https://www.facebook.com/museumofillusions.tbilisi/" }, { kind: "instagram", url: "https://www.instagram.com/museumofillusions_tbilisi/" }],
-      conditions: ["Museum of Illusions only: 25 GEL instead of 40 GEL", "Combined with one more museum (Holoseum or Planetarium): 35 GEL instead of 65 GEL", "All three museums: 45 GEL instead of 80 GEL", "Prices are per adult (18+); visitors under 18 pay the standard children's ticket price", "Individual (non-group) visits; group prices by arrangement; not combinable with other discounts"]
-    },
-    {
-      cats: ["Entertainment"],
-      partner: "Holoseum",
-      badge: "Up to −46%",
-      logo: "logos/holoseum.png",
-      desc: "The Holoseum at 10 Betlemi Street presents an audio-visual digital exhibition inspired by the work of Van Gogh. It shares the museum space with the Museum of Illusions and the Planetarium, so you can combine your visit with one or both of them at a reduced price.",
-      benefit: "Adult tickets 25 GEL instead of 40 GEL",
-      activation: "Show your parent card at the ticket desk at 10 Betlemi Street and pay by bank card in the same name as on your card.",
-      validity: "Valid until 16 March 2027",
-      links: [{ kind: "facebook", url: "https://www.facebook.com/holoseum/" }],
-      conditions: ["Holoseum only: 25 GEL instead of 40 GEL", "Combined with one more museum (Museum of Illusions or Planetarium): 35 GEL instead of 65 GEL", "All three museums: 45 GEL instead of 80 GEL", "Prices are per adult (18+); visitors under 18 pay the standard children's ticket price", "Individual (non-group) visits; group prices by arrangement; not combinable with other discounts"]
-    },
-    {
-      cats: ["Entertainment"],
-      partner: "Planetarium",
-      badge: "Up to −46%",
-      logo: "logos/planetarium.png",
-      desc: "The Planetarium at 10 Betlemi Street shows immersive educational animation on a dome screen, along with a giant kaleidoscope of cosmic images. It shares the museum space with the Museum of Illusions and the Holoseum, so you can combine your visit with one or both of them at a reduced price.",
-      benefit: "Adult tickets 25 GEL instead of 40 GEL",
-      activation: "Show your parent card at the ticket desk at 10 Betlemi Street and pay by bank card in the same name as on your card.",
-      validity: "Valid until 16 March 2027",
-      links: [{ kind: "facebook", url: "https://www.facebook.com/betlemi10/" }],
-      conditions: ["Planetarium only: 25 GEL instead of 40 GEL", "Combined with one more museum (Museum of Illusions or Holoseum): 35 GEL instead of 65 GEL", "All three museums: 45 GEL instead of 80 GEL", "Prices are per adult (18+); visitors under 18 pay the standard children's ticket price", "Individual (non-group) visits; group prices by arrangement; not combinable with other discounts"]
-    },
-    {
-      cats: ["Gastronomy", "Travel & Leisure"],
-      partner: "The Biltmore Tbilisi",
-      badge: "−10–20%",
-      logo: "logos/biltmore.png",
-      desc: "Set on historic Rustaveli Avenue in the heart of the capital, The Biltmore Tbilisi Hotel is a five-star landmark where contemporary elegance, distinctive architecture and refined hospitality come together. Crowning the hotel's top floors, Xeme Restaurant and Xeme Bar offer an exceptional setting for birthdays and private celebrations, with panoramic views over Tbilisi. Birthday packages start from 120 GEL per person and include a specially curated menu, a Signature Mocktail, an elegant table setting and complimentary parking.",
-      benefit: "10% off birthday packages, 20% off room rates",
-      activation: "Book through the hotel's sales team on +995 32 272 72 72 and say you are a Circle (BIST) member. Pay by bank card in the same name as on your parent card.",
-      validity: "Valid until further notice",
-      links: [{ kind: "web", url: "https://www.thebiltmorehotels.com/en/biltmore-tbilisi/" }, { kind: "facebook", url: "https://www.facebook.com/BiltmoreTbilisi" }, { kind: "instagram", url: "https://www.instagram.com/biltmoretbilisi" }],
-      conditions: ["Birthday packages from 120 GEL per person; venues: Xeme Restaurant (31st floor, for 15 to 20 guests) or Xeme Bar (30th floor, for 25 to 80 guests, private use)", "Chef-attended live stations, bespoke birthday cakes and extra decor are available at additional cost", "20% off the hotel's published room rates for all room categories, except 30 December to 5 January"]
-    },
-    {
-      cats: ["Gastronomy", "Wellness & Sport"],
-      partner: "Tbilisi Marriott Hotel",
-      badge: "−20%",
-      logo: "logos/tbilisi-marriott.png",
-      desc: "Tbilisi Marriott Hotel is a historic landmark on Rustaveli Avenue, in the heart of the capital and a short walk from Freedom Square, the Opera House and the Old Town. Its dining venues include Parnas Café & Restaurant, the Lobby Lounge and the Majestic Cigar Lounge, and the hotel gym has cardio and strength equipment with a sauna and steam rooms. Together with Courtyard by Marriott Tbilisi and Moxy Tbilisi it is run by GMT Hotels, and Circle members enjoy the same benefits at all three hotels.",
-      benefit: "20% off dining, gym and massage",
-      activation: "Show your parent card and an ID in your name before paying at the hotel's restaurants and bars, fitness centre or massage service, and pay by bank card in the same name. For a children's birthday event, contact the hotel on +995 32 277 92 00 and say you are a Circle (BIST) member.",
-      validity: "Valid until 20 October 2027",
-      links: [{ kind: "web", url: "https://www.marriott.com/en-us/hotels/tbsmc-tbilisi-marriott-hotel/overview/" }],
-      conditions: ["20% off at the hotel's food and beverage outlets, excluding alcoholic beverages", "20% off gym use and massage services", "Special discounts on children's birthday events, arranged with the hotel", "In-person retail purchases only, paid by bank card in the same name as on your parent card"]
-    },
-    {
-      cats: ["Gastronomy", "Wellness & Sport"],
-      partner: "Courtyard by Marriott Tbilisi",
-      badge: "−20%",
-      logo: "logos/courtyard-marriott.png",
-      desc: "Courtyard by Marriott Tbilisi sits on Freedom Square, where Rustaveli Avenue meets the Old Town, with the city's main sights within walking distance. Brasserie Freedom Restaurant and Bar serves everything from breakfast to late dinner and cocktails, and the hotel has a 24-hour gym, a heated indoor pool and a whirlpool. It is part of GMT Hotels alongside Tbilisi Marriott and Moxy Tbilisi, with the same Circle benefits at all three hotels.",
-      benefit: "20% off dining, gym and massage",
-      activation: "Show your parent card and an ID in your name before paying at Brasserie Freedom, the fitness centre or the massage service, and pay by bank card in the same name. For a children's birthday event, contact the hotel on +995 32 277 91 00 and say you are a Circle (BIST) member.",
-      validity: "Valid until 20 October 2027",
-      links: [{ kind: "web", url: "https://www.marriott.com/en-us/hotels/tbscy-courtyard-tbilisi/overview/" }],
-      conditions: ["20% off at the hotel's food and beverage outlets, excluding alcoholic beverages", "20% off gym use and massage services", "Special discounts on children's birthday events, arranged with the hotel", "In-person retail purchases only, paid by bank card in the same name as on your parent card"]
-    },
-    {
-      cats: ["Gastronomy"],
-      partner: "Moxy Tbilisi",
-      badge: "−20%",
-      logo: "logos/moxy-tbilisi.png",
-      desc: "Moxy Tbilisi is Marriott's playful lifestyle hotel on Saarbrücken Square, in one of the capital's liveliest districts, a few steps from the Dry Bridge market and the river. Its social heart is the Now Bar, with the Grab & Go Bar for quick bites and coffee, and its lounge spaces host parties and celebrations. Moxy is run by GMT Hotels together with Tbilisi Marriott and Courtyard by Marriott Tbilisi.",
-      benefit: "20% off food and drink",
-      activation: "Show your parent card and an ID in your name before paying at the Now Bar or the Grab & Go Bar, and pay by bank card in the same name. For a children's birthday event, contact the hotel on +995 32 277 92 77 and say you are a Circle (BIST) member.",
-      validity: "Valid until 20 October 2027",
-      links: [{ kind: "web", url: "https://www.marriott.com/en-us/hotels/tbsox-moxy-tbilisi/overview/" }],
-      conditions: ["20% off at the hotel's food and beverage outlets, excluding alcoholic beverages", "Special discounts on children's birthday events, arranged with the hotel", "The gym and massage discounts do not apply at Moxy, which has no gym or massage room", "In-person retail purchases only, paid by bank card in the same name as on your parent card"]
-    },
-    {
-      cats: ["Travel & Leisure", "Gastronomy"],
-      partner: "Khedi Hotel",
-      badge: "−10%",
-      logo: "logos/khedi.png",
-      desc: "Khedi Hotel is a 57-room hotel at 24 Ketevan Dedofali Avenue in Avlabari, a short walk from Holy Trinity Cathedral and the Bridge of Peace. Its top-floor Khedi Restaurant serves a contemporary take on Georgian cuisine, the Khedi Sushi Bar focuses on fresh fish and seafood, and the hotel also has a lobby bar, a conference hall for up to 150 people and a fitness studio.",
-      benefit: "10% off the restaurant, sushi bar, accommodation and conference hall",
-      activation: "Show your parent card and an ID in your name when ordering or checking in, or say you are a Circle (BIST) member when you book on +995 322 448 000 or sales@khedihotel.ge. Pay by bank card in the same name as on your parent card.",
-      validity: "Valid until 31 December 2027",
-      links: [{ kind: "web", url: "https://khedihotel.ge/" }, { kind: "facebook", url: "https://www.facebook.com/profile.php?id=61551007004330" }, { kind: "instagram", url: "https://www.instagram.com/khedihotel/" }],
-      conditions: ["Applies to published prices only and cannot be combined with other discounts or already discounted offers", "Retail purchases only"]
-    },
-    {
-      cats: ["Gastronomy"],
-      partner: "Restaurant Andazi",
-      badge: "−20%",
-      logo: "logos/andazi.png",
-      desc: "Restaurant Andazi is the restaurant and bar of Hilton Garden Inn Tbilisi Chavchavadze, at 64a Chavchavadze Avenue. Its kitchen combines innovation and tradition, from farm-to-table salads to main courses built on carefully sourced ingredients, in a setting that blends modern elegance with warm, rustic touches and suits intimate dinners, business meetings and larger gatherings alike.",
-      benefit: "20% off restaurant services",
-      activation: "Reserve a table on +995 322 25 20 20 and say you are a Circle (BIST) member. Show your parent card and an ID in your name at the restaurant and pay by bank card in the same name.",
-      validity: "Valid from 1 November 2026 to 31 March 2027",
-      links: [{ kind: "web", url: "https://www.hilton.com/en/hotels/tbsgigi-hilton-garden-inn-tbilisi-chavchavadze/dining/" }],
-      conditions: ["Applies to the restaurant's standard menu prices; retail, in-person visits only"]
-    },
-    {
-      cats: ["Gastronomy"],
-      partner: "Iakobis Ezo",
-      badge: "Circle Privilege",
-      logo: "logos/iakobis-ezo.png",
-      desc: "Iakobis Ezo is the garden restaurant and bar of the Artizan Design Hotel at 14 Iakob Nikoladze Street. The neo-bistro serves modern, soul-warming dishes that pay homage to Georgia's culinary roots, refined with French technique, from breakfast through to late dinner.",
-      benefit: "Iakobis Ezo Circle Privilege: chef's welcome bite, priority reservations and preferred seating, invitations to culinary events",
-      activation: "Book a table online at iakobisezo.resos.com (write CIRCLE Community in the comments) or call +995 511 77 77 32 and mention CIRCLE. Show your parent card when you arrive.",
-      validity: "Valid from 28 October 2026 to 27 October 2027",
-      links: [{ kind: "web", url: "https://www.artizanhotels.com/content/1117/5201/Iakobis-Ezo" }, { kind: "facebook", url: "https://www.facebook.com/iakobisezo" }, { kind: "instagram", url: "https://www.instagram.com/iakobisezo" }],
-      conditions: ["Chef's Welcome Bite: a complimentary welcome from the chef, once per table with a food order", "Priority reservations and preferred seating", "Invitations to selected culinary events and special evenings at Iakobis Ezo", "All privileges are subject to availability"]
-    },
-    {
-      cats: ["Automotive"],
-      partner: "GeoWrap",
-      badge: "−5–40%",
-      logo: "logos/geowrap.png",
-      desc: "GeoWrap is a car protection and detailing studio in Didi Dighomi, Tbilisi (9 Parsadani Street). It applies self-healing paint protection film in clear gloss, clear matte and colour, Gyeon ceramic coatings, and also offers polishing and scratch removal, window tinting, interior sound and vibration insulation and heat-cured wheel painting.",
-      benefit: "Special Circle prices on paint protection film, ceramic coatings, polishing, tinting and other car care services: 5% to 40% off",
-      activation: "Book with the studio on +995 593 10 31 13 (WhatsApp +995 593 73 13 31) and visit GeoWrap at 9 Parsadani Street, Didi Dighomi. Show your parent card when you place the order and pay by bank card in the same name as on your school card.",
-      validity: "Valid until 30 September 2027",
-      links: [{ kind: "web", url: "https://www.geowrap.ge/" }, { kind: "facebook", url: "https://www.facebook.com/Geowrapgeo/" }, { kind: "instagram", url: "https://www.instagram.com/geowrap/" }],
-      conditions: ["Clear gloss self-healing film on high-risk areas (bonnet, front bumper, front fenders, headlights, mirrors): sedan 4,050 GEL instead of 4,860 GEL", "Full-vehicle self-healing film (clear gloss, clear matte or colour): sedan 9,990 GEL instead of 10,530-11,340 GEL", "Polishing and scratch removal: sedan 800-1,000 GEL instead of 1,000-1,200 GEL", "Gyeon ceramic coating: from 800 GEL instead of 1,000 GEL (6-month Can Coat) to 2,500 GEL instead of 3,000 GEL (5-year, two layers)", "Window tinting: standard sedan 1,200 GEL instead of 1,500 GEL; heat-cured wheel painting from 2,000 GEL instead of 2,200 GEL", "SUV and luxury supercar prices are set in the agreement; the studio confirms the price for your car", "Retail, in-person purchases at the studio only"]
-    },
-    {
-      cats: ["Automotive"],
-      partner: "Lexus Tbilisi",
-      badge: "−10%",
-      logo: "logos/lexus.png",
-      desc: "Lexus Tbilisi is the Lexus dealership and service centre at 160 Agmashenebeli Alley, where you can explore the current Lexus range and have your car serviced with genuine Lexus parts. The service centre also offers vehicle wrapping.",
-      benefit: "10% off service procedures, spare parts and vehicle wrapping",
-      activation: "Book your service on +995 32 222 55 88, info@lexus-tbilisi.ge or online at lexusgeorgia.ge and say you are a Circle (BIST) member. Show your parent card and an ID in your name at the service reception before paying.",
-      validity: "Valid until 14 October 2027",
-      links: [{ kind: "web", url: "https://www.lexusgeorgia.ge/" }],
-      conditions: ["Covers Lexus Tbilisi service procedures, spare parts and vehicle wrapping", "Does not apply to tyres or to the purchase of new vehicles", "Retail purchases only"]
-    },
-    {
-      cats: ["Expat Services"],
-      partner: "ExpatHub",
-      badge: "−15%",
-      logo: "logos/expathub.png",
-      desc: "ExpatHub supports expats navigating life, business and immigration procedures in Georgia. Its services include accounting and tax advice, business registration, immigration and residency assistance, legal services, and guidance on buying or renting real estate. The team offers bilingual support.",
-      benefit: "15% off ExpatHub services, plus priority scheduling",
-      activation: "Book a consultation on +995 5111 39929 or info@expathub.ge, show your parent card when you order the service and pay by bank card in the same name. Office hours: Monday to Thursday, 10:00 to 17:00.",
-      validity: "Valid until March 2027",
-      links: [{ kind: "web", url: "https://expathub.ge/" }, { kind: "facebook", url: "https://www.facebook.com/ExpatHub.GE/" }, { kind: "instagram", url: "https://www.instagram.com/expathub.ge/" }],
-      conditions: ["Covers legal, tax and accounting services, including study residence permits for students and parents and real-estate purchases", "Priority scheduling for Circle members"]
-    },
-    {
-      cats: ["Other"],
-      partner: "Sakhli7",
-      badge: "−5–15%",
-      logo: "logos/sakhli7.png",
-      desc: "Sakhli creates furniture for the whole home, with a fast, customer-focused service. Its aim is to give every space a distinctive character with premium-quality furniture. Sakhli also offers an innovative virtual-reality service that lets you see your project at real scale and make changes on the spot while the design is being agreed.",
-      benefit: "5–15% on the entire furniture collection",
-      activation: "Present your parent card in the Sakhli showroom when you place the order and pay by bank card in the same name as on your card.",
-      validity: "Valid until 8 March 2027",
-      links: [{ kind: "web", url: "https://sakhli7.ge/" }],
-      conditions: ["The rate (5 to 15%) applies according to product category", "Retail, in-person purchases only"]
-    },
-    {
-      cats: ["Beauty & Personal Care", "Shopping"],
-      partner: "Lutecia",
-      badge: "VIP Card",
-      logo: "logos/lutecia.png",
-      desc: "Since 1998 Lutecia has been bringing the world of fragrance to Georgia, and today it has 14 perfumery and cosmetics stores in Tbilisi, Batumi and Kutaisi, including Galleria Tbilisi, East Point, Merani Mall, City Mall and Tbilisi Outlet Village. Its shelves bring together more than 120 fragrance, skincare and make-up brands, from Chanel, Dior, Guerlain and Yves Saint Laurent to Lancôme, Clarins, Estée Lauder and Kiehl's, along with hair and body care and gift sets.",
-      benefit: "Lutecia loyalty card with VIP terms, issued on the spot",
-      activation: "Show your parent card and an ID in your name at any Lutecia store and a Lutecia loyalty card with the benefits of the VIP card is issued to you on the spot. Pay by bank card in the same name.",
-      validity: "Valid until 27 October 2027",
-      links: [{ kind: "web", url: "https://www.lutecia.ge/en/" }, { kind: "facebook", url: "https://www.facebook.com/lutecia.official/" }, { kind: "instagram", url: "https://www.instagram.com/lutecia.official/" }],
-      conditions: ["Retail, in-person purchases at any Lutecia store", "The loyalty card is personal and cannot be transferred to another person", "Payment by bank card in the same name as on your parent card"]
-    },
-    {
-      cats: ["Shopping"],
-      partner: "Suwen",
-      badge: "−30%",
-      logo: "logos/suwen.png",
-      desc: "Suwen is a Turkish lingerie and homewear brand, founded in Istanbul in 2003, with more than 1,500 styles across bras and lingerie sets, sleepwear, loungewear and swimwear. In Tbilisi you will find it at East Point and at Galleria Tbilisi.",
-      benefit: "30% off non-discounted products",
-      activation: "Show your parent card and an ID in your name at a Suwen store before paying, and pay by bank card in the same name.",
-      validity: "Valid until 27 October 2027",
-      links: [{ kind: "instagram", url: "https://www.instagram.com/suwen_georgia/" }],
-      conditions: ["Applies to non-discounted products only", "Retail, in-person purchases at any Suwen store in Georgia", "Payment by bank card in the same name as on your parent card"]
-    },
-    {
-      cats: ["Shopping"],
-      partner: "Scalpers",
-      badge: "−20%",
-      logo: "logos/scalpers.png",
-      desc: "Scalpers is a Spanish fashion brand founded in Seville in 2007. First known for its elegant suits and ties, it now dresses men, women and children, from tailoring to sportswear, with stores across Europe, Latin America and the Middle East. Its first store in Georgia opened at East Point in July 2026: a 230 m² space with men's and women's collections.",
-      benefit: "20% off non-discounted products",
-      activation: "Show your parent card and an ID in your name at a Scalpers store in Georgia (East Point, Tbilisi) before paying, and pay by bank card in the same name.",
-      validity: "Valid until 27 October 2027",
-      links: [{ kind: "web", url: "https://en.ww.scalperscompany.com/" }, { kind: "instagram", url: "https://www.instagram.com/scalperscompany/" }],
-      conditions: ["Applies to non-discounted products only", "Retail, in-person purchases at any Scalpers store in Georgia", "Payment by bank card in the same name as on your parent card"]
-    },
-    {
-      cats: ["Shopping"],
-      partner: "Marilisi Jewelry House",
-      badge: "−7%",
-      logo: "logos/marilisi.png",
-      desc: "Marilisi is a family-run Georgian jewelry house that has been on the market since 2008 and regularly takes part in some of the world's most prestigious international jewelry exhibitions. Led by its founder and creative director Natia Gotsiridze, its atelier revives centuries-old Georgian and antique goldsmithing techniques, such as hand-worked gold lace, in high and fine jewelry, engagement and wedding rings and bespoke pieces. In 2023 Marilisi won a gold award at the Tashkent International Jewelry Exhibition.",
-      benefit: "7% off purchases of 2,000 GEL or more and a private Tea at Marilisi",
-      activation: "Show your parent card and an ID in your name at the Marilisi boutique, 43 Irakli Abashidze Street, Tbilisi (open daily from 11:00 to 19:00), before paying. To arrange a Tea at Marilisi, contact the boutique on +995 595 11 55 04 (phone and WhatsApp) or info@marilisi.com and say you are a Circle (BIST) member.",
-      validity: "Valid until 29 October 2027",
-      links: [{ kind: "web", url: "https://marilisi.ge/" }, { kind: "facebook", url: "https://www.facebook.com/Marilisi.Jewelry.House/" }, { kind: "instagram", url: "https://www.instagram.com/marilisi_official/" }],
-      conditions: ["7% off jewelry from the collections featured on marilisi.ge, on purchases of 2,000 GEL or more", "Tea at Marilisi: a private visit to the boutique for up to three guests, at a time agreed in advance with Marilisi", "During the visit you meet the founder, see the exhibition collection up close, hear about the world of fine jewelry and get a free personal consultation, a privilege so far reserved for Marilisi Club members", "Circle members are among the first to hear about promotions, new collections and special offers, together with Marilisi Club members"]
-    },
-    {
-      cats: ["Expat Services"],
-      partner: "Origen Collection",
-      badge: "Free advisory",
-      logo: "logos/origen-collection.png",
-      desc: "Origen Collection is a boutique, family-owned agency offering luxury real estate and concierge services to international buyers in Georgia, with a focus on exclusive residences in Tbilisi, Batumi and other sought-after destinations, from penthouses and premium apartments to mountain villas and seaside homes. It supports families relocating to Georgia, buyers and investors throughout the purchase or rental process, including property selection, private viewings, negotiation and coordination of legal and technical due diligence.",
-      benefit: "Free advisory services (standard price $2,500–4,000) and up to 5% off properties",
-      activation: "Write to executive@origencollection.com or call +995 599 380 011, mention the Circle programme and show your parent card at your consultation.",
-      validity: "Valid until 30 September 2027",
-      links: [{ kind: "web", url: "https://www.origencollection.com/" }],
-      conditions: ["Includes a complimentary private consultation, priority property search, access to selected off-market properties, a preliminary property review before negotiations begin and post-transaction assistance", "Up to 5% off properties represented by Origen Collection, where available and subject to confirmation by the owner or developer"]
-    }
-  ];
+  // The offers are not in the page: they come from the Circle API after login (see loadOffers).
 
   componentDidMount() {
     this.startTimer();
     this.onKey = (e) => { if (e.key === "Escape") this.setState({ menuOpen: false, detailIdx: null, authOpen: false, partnerOpen: false, feedbackOpen: false }); };
     window.addEventListener("keydown", this.onKey);
     // Links in our emails open the site with ?register=<link>, ?reset=<link>, ?join (with &email=) or ?login.
+    // A registration or password link starts afresh, even on a device that is logged in.
     const params = new URLSearchParams(window.location.search);
     const register = params.get("register") || "";
+    if (register.length >= 20 || params.get("reset")) {
+      this.saveToken("");
+      this.setState({ signedIn: false, checking: false, account: null });
+    }
     if (register.length >= 20) this.checkRegistration(register);
     else if (params.get("reset")) this.openAuth("reset", { resetToken: params.get("reset") });
-    else if (params.has("join") || params.has("register")) this.openJoin({ authEmail: params.get("email") || "" });
-    else if (params.has("login")) this.openAuth("login");
+    else if (!this.token && (params.has("join") || params.has("register"))) this.openJoin({ authEmail: params.get("email") || "" });
+    else if (!this.token && params.has("login")) this.openAuth("login");
     if (this.token) this.loadAccount();
     const linkParams = ["register", "reset", "join", "login", "email"];
     if (linkParams.some(k => params.has(k))) {
@@ -1076,7 +790,7 @@ class Component extends DCLogic {
   componentWillUnmount() { clearInterval(this.timer); clearTimeout(this.searchTimer); window.removeEventListener("keydown", this.onKey); document.body.style.overflow = ""; }
   componentDidUpdate(prevProps) {
     if (prevProps.slideSeconds !== this.props.slideSeconds || prevProps.autoplay !== this.props.autoplay) this.startTimer();
-    document.body.style.overflow = this.state.detailIdx !== null || this.state.authOpen || this.state.partnerOpen || this.state.feedbackOpen ? "hidden" : "";
+    document.body.style.overflow = this.state.detailIdx !== null || (this.state.authOpen && this.state.signedIn) || this.state.partnerOpen || this.state.feedbackOpen ? "hidden" : "";
   }
   startTimer() {
     clearInterval(this.timer);
@@ -1210,7 +924,23 @@ class Component extends DCLogic {
     "numbersOne": "1 personal number",
     "numbersMany": "{n} personal numbers",
     "savedOne": "1 personal number saved",
-    "savedMany": "{n} personal numbers saved"
+    "savedMany": "{n} personal numbers saved",
+    "tabLogin": "Log in",
+    "tabJoin": "Register",
+    "gateKicker": "CIRCLE · BIST COMMUNITY",
+    "gateTitle1": "More than a school.",
+    "gateTitle2": "A world you belong to.",
+    "gateText": "Circle is the BIST parent community, with exclusive offers from partner businesses across Tbilisi for BIST families and staff. Log in or register to see them.",
+    "partnerQuestion": "Run a business?",
+    "partnerLink": "Become a Circle partner",
+    "contactEmail": "circle@bist.ge",
+    "contactMailto": "mailto:circle@bist.ge",
+    "contactPhone": "+995 322 80 19 19",
+    "contactTel": "tel:+995322801919",
+    "loadingOffers": "Loading the offers…",
+    "failedTitle": "The offers could not be loaded",
+    "failedText": "Check your internet connection and try again.",
+    "retry": "Try again"
   };
 
   ROLE_LABELS = {
@@ -1396,25 +1126,56 @@ class Component extends DCLogic {
     return data;
   }
 
-  // Checks the saved login and fetches the member's details.
+  // The sign-in page opens on Log in on a device that has logged in before, otherwise on Register.
+  firstMode() {
+    try { return window.localStorage.getItem("circle_member") ? "login" : "join"; } catch (e) { return "join"; }
+  }
+
+  // Checks the saved login and fetches the member's details (and the offers, the first time).
   async loadAccount() {
     try {
       const { account } = await this.api("/me");
-      this.setState({ signedIn: true, account });
+      this.setState({ signedIn: true, checking: false, account });
+      if (!this.offersRequested) this.loadOffers();
     } catch (err) {
-      if (err.error !== "unauthorized" && err.error !== "no_active_student") {
-        if (this.state.authOpen && this.state.authMode === "account") this.setState({ authError: this.errorText(err) });
+      if (err.error === "unauthorized" || err.error === "no_active_student") {
+        this.signOut(err.error === "no_active_student" ? this.errorText(err) : "");
         return;
       }
-      this.saveToken("");
-      this.setState({ signedIn: false, account: null });
-      if (err.error === "no_active_student" && !this.state.authOpen) this.openAuth("login", { authError: this.errorText(err) });
+      // Circle could not be reached: keep the login; the offers section offers to try again.
+      this.setState({ checking: false });
+      if (this.state.authOpen && this.state.authMode === "account") this.setState({ authError: this.errorText(err) });
+      if (!this.offersRequested) this.loadOffers();
+    }
+  }
+
+  // The offers come from the Circle API, which sends them only to logged-in members.
+  async loadOffers() {
+    this.offersRequested = true;
+    this.setState({ offersState: "loading" });
+    try {
+      const { offers } = await this.api("/offers");
+      // A fresh random order on every visit, so that no offer is always on top.
+      for (let i = offers.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [offers[i], offers[j]] = [offers[j], offers[i]]; }
+      this.setState({ offers, offersState: "ready", detailIdx: null });
+    } catch (err) {
+      if (err.error === "unauthorized" || err.error === "no_active_student") this.signOut(err.error === "no_active_student" ? this.errorText(err) : "");
+      else this.setState({ offersState: "failed" });
     }
   }
 
   signIn(data, extra) {
     this.saveToken(data.token);
-    this.setState({ signedIn: true, account: data.account, ...extra });
+    try { window.localStorage.setItem("circle_member", "1"); } catch (e) { /* private browsing */ }
+    this.setState({ signedIn: true, checking: false, account: data.account, ...extra });
+    this.loadOffers();
+  }
+
+  // Back to the sign-in page: after logging out, or when the login has ended.
+  signOut(message) {
+    this.saveToken("");
+    this.offersRequested = false;
+    this.setState({ signedIn: false, checking: false, account: null, offers: null, offersState: "loading", authOpen: false, authMode: "login", authError: message || "", menuOpen: false, detailIdx: null, feedbackOpen: false });
   }
 
   openAuth(mode, extra) {
@@ -1449,10 +1210,7 @@ class Component extends DCLogic {
     Promise.resolve()
       .then(() => work(form))
       .catch(err => {
-        if (err && (err.error === "unauthorized" || err.error === "no_active_student")) {
-          this.saveToken("");
-          this.setState({ signedIn: false, account: null, authMode: "login" });
-        }
+        if (err && (err.error === "unauthorized" || err.error === "no_active_student")) this.signOut();
         this.setState({ authError: this.errorText(err || {}) });
         this.track("form_error", { form: this.state.authMode, reason: (err && err.error) || "unknown" });
       })
@@ -1542,7 +1300,7 @@ class Component extends DCLogic {
           password
         });
         this.track("sign_up", { method: "circle_account", role: data.account.role });
-        this.signIn(data, { authMode: "done", doneKind: "registered" });
+        this.signIn(data, { authMode: "done", doneKind: "registered", authOpen: true });
       } catch (err) {
         if (err.error === "token_invalid" || err.error === "already_registered") {
           this.setState({ authMode: "linkError", authError: this.errorText(err) });
@@ -1576,7 +1334,7 @@ class Component extends DCLogic {
       const password = String(form.get("password") || "");
       if (password.length < 8) throw { error: "validation", fields: { password: "too_short" } };
       const data = await this.api("/reset", { token: this.state.resetToken, password });
-      this.signIn(data, { authMode: "done", doneKind: "reset" });
+      this.signIn(data, { authMode: "done", doneKind: "reset", authOpen: true });
     });
   }
 
@@ -1595,24 +1353,18 @@ class Component extends DCLogic {
 
   logout() {
     this.api("/logout", {}).catch(() => {});
-    this.saveToken("");
-    this.setState({ signedIn: false, account: null, authOpen: false, menuOpen: false });
+    this.signOut("");
     this.track("logout", {});
   }
 
   renderVals() {
-    if (!this.offersShuffled) {
-      // Show the partners in a fresh random order on every visit, so that no offer is always on top.
-      const a = this.OFFERS;
-      for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-      this.offersShuffled = true;
-    }
+    const OFFERS = this.state.offers || [];
     const { slide, cat, q, partnerForm, feedbackForm, authMode, authBusy, role, account, signup } = this.state;
     const chipBase = { display: "inline-flex", alignItems: "center", gap: "7px", padding: "10px 16px", borderRadius: "999px", border: "1px solid #D8D4C6", background: "#FFFFFF", color: "#0D1B3E", fontFamily: "Manrope, sans-serif", fontSize: "13.5px", fontWeight: 700, cursor: "pointer", transition: "all .25s" };
-    const activeCats = this.CATS.filter(c => this.OFFERS.some(o => o.cats.includes(c)));
+    const activeCats = this.CATS.filter(c => OFFERS.some(o => o.cats.includes(c)));
     const chips = ["All", ...activeCats].map(c => ({
       label: c === "All" ? "All offers" : c,
-      count: c === "All" ? this.OFFERS.length : this.OFFERS.filter(o => o.cats.includes(c)).length,
+      count: c === "All" ? OFFERS.length : OFFERS.filter(o => o.cats.includes(c)).length,
       onClick: () => { this.setState({ cat: c }); this.track("select_category", { category: c }); },
       style: c === cat ? { ...chipBase, background: "#0D1B3E", color: "#FFFFFF", borderColor: "#0D1B3E" } : chipBase
     }));
@@ -1629,14 +1381,16 @@ class Component extends DCLogic {
       const text = [o.partner, o.desc, o.benefit, o.cats.join(" "), o.activation].join(" ").toLowerCase();
       return terms.every(t => text.includes(t));
     };
-    const cards = this.OFFERS.filter(o => (cat === "All" || o.cats.includes(cat)) && matches(o))
-      .map(o => ({ ...decorate(o), open: () => { this.setState({ detailIdx: this.OFFERS.indexOf(o) }); this.track("select_content", { content_type: "offer", item_id: o.partner }); } }));
-    const detail = this.state.detailIdx === null ? null : decorate(this.OFFERS[this.state.detailIdx]);
+    const cards = OFFERS.filter(o => (cat === "All" || o.cats.includes(cat)) && matches(o))
+      .map(o => ({ ...decorate(o), open: () => { this.setState({ detailIdx: OFFERS.indexOf(o) }); this.track("select_content", { content_type: "offer", item_id: o.partner }); } }));
+    const detail = this.state.detailIdx === null ? null : decorate(OFFERS[this.state.detailIdx]);
     const dots = [0, 1, 2].map(i => ({
       onClick: () => this.setState({ slide: i }),
       style: { width: i === slide ? "34px" : "16px", height: "4px", borderRadius: "99px", border: "none", padding: 0, cursor: "pointer", transition: "all .3s", background: i === slide ? "#F2B32C" : "rgba(255,255,255,.35)" }
     }));
     const authText = this.AUTH_TEXT[authMode] || this.AUTH_TEXT.login;
+    const TAB = { border: "none", borderRadius: "999px", padding: "11px 12px", background: "transparent", color: "#0D1B3E", fontFamily: "Manrope, sans-serif", fontSize: "14px", fontWeight: 800, cursor: "pointer" };
+    const TAB_ON = { ...TAB, background: "#0D1B3E", color: "#FFFFFF" };
     const accountName = account ? ((account.firstName || "") + " " + (account.lastName || "")).trim() || account.name : "";
     const sentKids = role && role !== "employee" ? this.filledKids(this.state.kids).map(([value, i]) => {
       const s = this.KID_STATUS[this.state.kidStatus[i]];
@@ -1663,6 +1417,21 @@ class Component extends DCLogic {
       clearFilters: () => this.setState({ q: "", cat: "All" }),
       noResults: cards.length === 0,
       t: this.T,
+      // Visitors who are not logged in see only the sign-in page; members see the site.
+      showChecking: this.state.checking,
+      showSite: this.state.signedIn && !this.state.checking,
+      authPage: !this.state.signedIn && !this.state.checking,
+      authOverlay: this.state.signedIn && !this.state.checking && this.state.authOpen,
+      authTabs: authMode === "login" || authMode === "join",
+      tabLoginOn: authMode === "login",
+      tabJoinOn: authMode === "join",
+      tabLoginStyle: authMode === "login" ? TAB_ON : TAB,
+      tabJoinStyle: authMode === "join" ? TAB_ON : TAB,
+      toJoin: () => { if (this.state.authMode !== "join") this.openJoin(); },
+      offersLoading: this.state.offersState === "loading",
+      offersFailed: this.state.offersState === "failed",
+      showOffers: this.state.offersState === "ready",
+      retryOffers: () => this.loadOffers(),
       signedIn: this.state.signedIn,
       signedOut: !this.state.signedIn,
       openLogin: () => this.openAuth("login"),
@@ -1769,9 +1538,9 @@ class Component extends DCLogic {
       submitFeedback: (e) => this.sendForm(e, "feedbackForm", p => "Circle feedback: " + (p.offer || "general"), { name: "feedback_submit", params: {} }),
       four: 4,
       dots, chips, cards,
-      offerCountLabel: cat === "All" && !terms.length
-        ? `${this.OFFERS.length} offers · ${activeCats.length} categories`
-        : `${cards.length} of ${this.OFFERS.length} offers`,
+      offerCountLabel: this.state.offersState !== "ready" ? "" : cat === "All" && !terms.length
+        ? `${OFFERS.length} offers · ${activeCats.length} categories`
+        : `${cards.length} of ${OFFERS.length} offers`,
       showNotes: this.props.showTerms ?? true
     };
   }
