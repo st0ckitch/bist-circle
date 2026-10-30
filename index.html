@@ -937,21 +937,31 @@ class Component extends DCLogic {
     if (window.gtag) window.gtag("event", name, params || {});
   }
 
+  // Web3Forms access key for circle@bist.ge, from web3forms.com. It only lets the site send to that address,
+  // so it is safe to publish. The free plan accepts 250 submissions a month. Leave empty to use FormSubmit only.
+  WEB3FORMS_KEY = "";
+
+  // The form services to try, in order, until one accepts the submission.
+  formServices(subject) {
+    const services = [];
+    if (this.WEB3FORMS_KEY) services.push({ url: "https://api.web3forms.com/submit", extra: { access_key: this.WEB3FORMS_KEY, subject: subject, from_name: "Circle website" } });
+    services.push({ url: "https://formsubmit.co/ajax/circle@bist.ge", extra: { _subject: subject, _template: "table", _captcha: "false" } });
+    return services;
+  }
+
   sendForm(e, form, subject, event) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     if (fd.get("_honey")) return;
-    const payload = {};
-    fd.forEach((v, k) => { if (k !== "_honey" && String(v).trim() !== "") payload[k] = v; });
-    payload._subject = subject(payload);
-    payload._template = "table";
-    payload._captcha = "false";
+    const answers = {};
+    fd.forEach((v, k) => { if (k !== "_honey" && String(v).trim() !== "") answers[k] = v; });
+    const title = subject(answers);
     // If sending fails, the error message offers an email to circle@bist.ge with the details already filled in.
-    const lines = Object.keys(payload).filter(k => k[0] !== "_").map(k => k + ": " + payload[k]);
-    this.failedMail = { ...this.failedMail, [form]: "mailto:circle@bist.ge?subject=" + encodeURIComponent(payload._subject) + "&body=" + encodeURIComponent(lines.join("\n")) };
+    const lines = Object.keys(answers).map(k => k + ": " + answers[k]);
+    this.failedMail = { ...this.failedMail, [form]: "mailto:circle@bist.ge?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(lines.join("\n")) };
     this.setState({ [form]: "sending" });
-    // FormSubmit only answers once it has emailed the submission, which can take a long time.
-    // Wait up to 4 seconds for its answer, then thank the visitor while the request finishes in the background.
+    // Form services can take a long time to answer. Wait up to 4 seconds, then thank the visitor
+    // while the request finishes in the background.
     let shown = false;
     const sent = () => {
       if (shown) return;
@@ -961,14 +971,19 @@ class Component extends DCLogic {
       this.track(event.name, event.params);
     };
     const timer = setTimeout(sent, 4000);
-    // Send plain form fields, not JSON: a JSON body makes the browser ask FormSubmit for CORS permission first
-    // (a preflight), and FormSubmit's preflight answer has been missing the header browsers need, so the send was blocked.
-    fetch("https://formsubmit.co/ajax/circle@bist.ge", { method: "POST", headers: { "Accept": "application/json" }, body: new URLSearchParams(payload) })
+    // Try each service in turn, so the submission still arrives when one is down or over its limit.
+    // Plain form fields, not JSON, keep this a simple request that browsers send without a CORS preflight.
+    const services = this.formServices(title);
+    const post = i => fetch(services[i].url, { method: "POST", headers: { "Accept": "application/json" }, body: new URLSearchParams({ ...answers, ...services[i].extra }) })
       .then(r => r.json().catch(() => { throw new Error("HTTP " + r.status + ", not JSON"); }))
-      .then(d => {
-        if (String(d.success) !== "true") throw new Error(d.message);
-        sent();
-      })
+      .then(d => { if (String(d.success) !== "true") throw new Error(d.message || "not accepted"); })
+      .catch(err => {
+        if (i + 1 >= services.length) throw err;
+        this.track("form_fallback", { form: form, from: services[i].url, reason: String((err && err.message) || err).slice(0, 100) });
+        return post(i + 1);
+      });
+    post(0)
+      .then(sent)
       .catch(err => {
         const reason = String((err && err.message) || err).slice(0, 100);
         if (shown) { this.track("form_error", { form: form, after_thanks: true, reason: reason }); return; }
