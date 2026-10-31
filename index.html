@@ -82,14 +82,14 @@
 
   /* Mobile layout. The page is composed with inline styles, so small-screen
      overrides live here and need !important to win. */
-  @media (max-width: 1079px) {
+  @media (max-width: 1119px) {
     html { scroll-padding-top: 84px; }
     nav > div { padding: 10px 16px !important; }
     /* Desktop links hide behind the hamburger menu on small screens */
     nav > div > div:last-of-type { display: none !important; }
     nav button[aria-label="Menu"] { display: inline-flex !important; }
   }
-  @media (min-width: 1080px) {
+  @media (min-width: 1120px) {
     /* Safety: a menu left open while resizing up must not linger */
     nav [data-screen-label="Mobile menu"] { display: none !important; }
   }
@@ -161,7 +161,7 @@
         <a href="#how" style="color: #0D1B3E; text-decoration: none; font-size: 14px; font-weight: 600;">How it works</a>
         <a href="#feedback" onClick="{{ openFeedback }}" style="color: #0D1B3E; text-decoration: none; font-size: 14px; font-weight: 600;">Feedback</a>
         <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openAccount }}" style="background: transparent; border: 1px solid rgba(13,27,62,.3); color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 13.5px; font-weight: 700; padding: 10px 18px; border-radius: 999px; cursor: pointer; transition: all .25s;" style-hover="border-color: #0D1B3E; background: #0D1B3E; color: #FFFFFF;">{{ t.myAccount }}</button></sc-if>
-        <a href="#offers" style="background: #F2B32C; color: #0D1B3E; text-decoration: none; font-size: 13.5px; font-weight: 800; padding: 10px 18px; border-radius: 999px; transition: all .25s;" style-hover="background: #0D1B3E; color: #FFFFFF;">Browse offers</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeHRiZ9N5bX0oMaD8666Yzc8tOb5G2TWRGegLGVDFgdzoCXYA/viewform" target="_blank" rel="noopener" style="background: #F2B32C; color: #0D1B3E; text-decoration: none; font-size: 13.5px; font-weight: 800; padding: 10px 18px; border-radius: 999px; transition: all .25s;" style-hover="background: #0D1B3E; color: #FFFFFF;">Choose your topic</a>
       </div>
       <button onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="display: none; width: 44px; height: 44px; align-items: center; justify-content: center; border: 1px solid rgba(13,27,62,.25); border-radius: 12px; background: transparent; color: #0D1B3E; font-size: 19px; line-height: 1; cursor: pointer; padding: 0;">{{ menuIcon }}</button>
     </div>
@@ -173,7 +173,7 @@
         <a href="#how" onClick="{{ closeMenu }}" style="color: #0D1B3E; text-decoration: none; font-size: 16px; font-weight: 700; padding: 13px 6px;">How it works</a>
         <a href="#feedback" onClick="{{ openFeedback }}" style="color: #0D1B3E; text-decoration: none; font-size: 16px; font-weight: 700; padding: 13px 6px;">Feedback</a>
         <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openAccount }}" style="margin-top: 4px; border: 1px solid rgba(13,27,62,.3); background: transparent; color: #0D1B3E; font-family: Manrope, sans-serif; font-size: 15px; font-weight: 700; padding: 13px 18px; border-radius: 999px; cursor: pointer;">{{ t.myAccount }}</button></sc-if>
-        <a href="#offers" onClick="{{ closeMenu }}" style="background: #F2B32C; color: #0D1B3E; text-decoration: none; text-align: center; font-size: 15px; font-weight: 800; padding: 13px 18px; border-radius: 999px;">Browse offers</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeHRiZ9N5bX0oMaD8666Yzc8tOb5G2TWRGegLGVDFgdzoCXYA/viewform" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="background: #F2B32C; color: #0D1B3E; text-decoration: none; text-align: center; font-size: 15px; font-weight: 800; padding: 13px 18px; border-radius: 999px;">Choose your topic</a>
       </div>
     </sc-if>
   </nav>
