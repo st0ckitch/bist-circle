@@ -136,12 +136,14 @@
     .gate { grid-template-columns: 1fr; }
     .gate-brand { padding: 24px 20px 28px; gap: 18px; }
     .gate-logo { height: 46px; }
+    .gate-kicker { letter-spacing: .12em; }
     .gate-title { font-size: 26px; }
     .gate-text { font-size: 14.5px; }
     .gate-photo, .gate-contact { display: none; }
     .gate-main { align-items: flex-start; padding: 16px 12px 40px; }
     .gate-card { padding: 24px 18px; }
   }
+  @media (max-width: 380px) { .gate-kicker { letter-spacing: .04em; font-size: 11px; } }
 </style>
 </helmet>
 
@@ -978,10 +980,10 @@ class Component extends DCLogic {
     "savedMany": "{n} personal numbers saved",
     "tabLogin": "Log in",
     "tabJoin": "Register",
-    "gateKicker": "CIRCLE · BIST COMMUNITY",
+    "gateKicker": "COMMUNITY / GROWTH / BELONGING",
     "gateTitle1": "More than a school.",
     "gateTitle2": "A world you belong to.",
-    "gateText": "Circle is the BIST parent community, with exclusive offers from partner businesses across Tbilisi for BIST families and staff. Log in or register to see them.",
+    "gateText": "A place that brings parents, children and the school together – a unique ecosystem where the growth and wellbeing of every parent and child come first.",
     "partnerQuestion": "Run a business?",
     "partnerLink": "Become a Circle partner",
     "contactEmail": "circle@bist.ge",
