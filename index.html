@@ -422,9 +422,6 @@
         </sc-for>
       </div>
     </sc-if>
-    <sc-if value="{{ noSessions }}" hint-placeholder-val="{{ true }}">
-      <div style="background: #FFFFFF; border: 1px dashed #D8D4C6; border-radius: 18px; padding: 30px 24px; text-align: center; font-size: 14.5px; line-height: 1.6; color: #5A6478;">{{ t.growthEmpty }}</div>
-    </sc-if>
     <div id="vote" class="vote-anchor">
     <sc-if value="{{ hasTopics }}" hint-placeholder-val="{{ true }}">
       <div class="vote" data-screen-label="Topic vote">
@@ -1053,7 +1050,6 @@ class Component extends DCLogic {
     "growthKicker": "GROWTH & DEVELOPMENT",
     "growthTitle": "Growth & Development",
     "growthIntro": "Masterclasses and sessions for the Circle community.",
-    "growthEmpty": "No masterclasses or sessions are planned yet. Vote for the topics you would like below, and we will plan them around the results.",
     "moreInfo": "More information",
     "voteTitle": "Vote for the next topics",
     "voteText": "Tick every topic you would like a session or masterclass on, as many as you like. We plan the programme around the results.",
@@ -1609,7 +1605,6 @@ class Component extends DCLogic {
       hasEvents: this.state.offersState === "ready" && this.state.events.length > 0,
       noEvents: this.state.offersState === "ready" && this.state.events.length === 0,
       hasSessions: this.state.offersState === "ready" && this.state.sessions.length > 0,
-      noSessions: this.state.offersState === "ready" && this.state.sessions.length === 0,
       ...this.topicVals(),
       signedIn: this.state.signedIn,
       signedOut: !this.state.signedIn,
